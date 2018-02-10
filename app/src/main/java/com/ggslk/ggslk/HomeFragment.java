@@ -4,11 +4,23 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.ggslk.ggslk.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -60,6 +72,52 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        String url = "https://ggslk.com/api/get_recent_posts/";
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        System.out.println("----------------------------------------------------------");
+                        System.out.println(response.length());
+                        try {
+                            System.out.println(response.getJSONArray("posts"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                        try {
+                            System.out.println(response.get("posts"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        try {
+                            for(int i = 0; i < response.getJSONArray("posts").length(); i++){
+                                System.out.println(response.getJSONArray("posts").get(i));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+
+//        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(
+//                10000,
+//                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+//                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        Volley.newRequestQueue(getContext()).add(jsonRequest);
     }
 
     @Override
