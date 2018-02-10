@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "714868264744",
+    "firebase_url": "https://ggslk-b7882.firebaseio.com",
+    "project_id": "ggslk-b7882",
+    "storage_bucket": "ggslk-b7882.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:714868264744:android:e93e777af03577a3",
+        "android_client_info": {
+          "package_name": "com.ggslk.ggslk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "714868264744-j6jnk2rombdbs7ukd1jfaqqi3g8gce6t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdkRGiC8zvQxxSNb4dHJWiZ4Y8s4camVY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

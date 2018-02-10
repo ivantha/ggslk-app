@@ -4,9 +4,18 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.ggslk.ggslk.R;
 
 
 /**
@@ -28,6 +37,9 @@ public class ArticlesFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private RequestQueue mRequestQueue;
+    private StringRequest mStringRequest;
 
     public ArticlesFragment() {
         // Required empty public constructor
@@ -58,6 +70,26 @@ public class ArticlesFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        //RequestQueue initialized
+        mRequestQueue = Volley.newRequestQueue(getContext());
+
+        //String Request initialized
+        mStringRequest = new StringRequest(Request.Method.GET, "https://ggslk.com/api/get_category_index/", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                System.out.println(response.toString());
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("----","Error :" + error.toString());
+            }
+        });
+
+        mRequestQueue.add(mStringRequest);
     }
 
     @Override

@@ -8,16 +8,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.onesignal.OneSignal;
 
 public class MainActivity extends AppCompatActivity implements EventsFragment.OnFragmentInteractionListener, HomeFragment.OnFragmentInteractionListener,
 ArticlesFragment.OnFragmentInteractionListener {
@@ -60,6 +62,16 @@ ArticlesFragment.OnFragmentInteractionListener {
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        // OneSignal service initialized
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
+
+        // Call syncHashedEmail anywhere in your app if you have the user's email.
+        // This improves the effectiveness of OneSignal's "best-time" notification scheduling feature.
+        // OneSignal.syncHashedEmail(userEmail);
     }
 
     @Override
