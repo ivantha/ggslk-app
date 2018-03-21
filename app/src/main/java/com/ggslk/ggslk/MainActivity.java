@@ -31,12 +31,12 @@ ArticlesFragment.OnFragmentInteractionListener {
                     transaction.commit();
                     return true;
                 case R.id.navigation_home:
-                    fragment = HomeFragment.newInstance("p1", "p2");
+                    fragment = HomeFragment.newInstance();
                     transaction.replace(R.id.container, fragment);
                     transaction.commit();
                     return true;
                 case R.id.navigation_articles:
-                    fragment = ArticlesFragment.newInstance("p1", "p2");
+                    fragment = ArticlesFragment.newInstance();
                     transaction.replace(R.id.container, fragment);
                     transaction.commit();
                     return true;

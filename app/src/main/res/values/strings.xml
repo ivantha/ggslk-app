@@ -1,16 +1,13 @@
 <resources>
+    <!--App level-->
     <string name="app_name">Geek Lanka</string>
 
+    <!--Tabs-->
     <string name="title_events">Events</string>
     <string name="title_home">Home</string>
     <string name="title_articles">Articles</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_test">TestActivity</string>
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="action_settings">Settings</string>
+    <!--Articles-->
+    <string name="text_article_name_default">Article name</string>
+    <string name="text_article_author_default">Author</string>
 </resources>
