@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 public class HomeFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
@@ -40,6 +42,38 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.articleRecyclerView);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
+
+        Article a1 = new Article();
+        a1.setTitle("Some title");
+        a1.setContent("Some content");
+        Author aa1 = new Author();
+        aa1.setName("My naaaame");
+        a1.setAuthor(aa1);
+        a1.setPublishedDate("123123123");
+
+        Article a2 = new Article();
+        a2.setTitle("Some title");
+        a2.setContent("Some content");
+        Author aa2 = new Author();
+        aa2.setName("My naaaame");
+        a2.setAuthor(aa2);
+        a2.setPublishedDate("123123123");
+
+        Article a3 = new Article();
+        a3.setTitle("Some title");
+        a3.setContent("Some content");
+        Author aa3 = new Author();
+        aa3.setName("My naaaame");
+        a3.setAuthor(aa3);
+        a3.setPublishedDate("123123123");
+
+        ArrayList<Article> articles = new ArrayList<>();
+        articles.add(a1);
+        articles.add(a2);
+        articles.add(a3);
+
+        ArticleRecyclerAdapter articleRecyclerAdapter = new ArticleRecyclerAdapter(articles);
+        recyclerView.setAdapter(articleRecyclerAdapter);
 
         return view;
     }

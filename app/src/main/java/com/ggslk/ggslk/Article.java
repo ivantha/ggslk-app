@@ -5,6 +5,7 @@ public class Article {
     private String title;
     private String content;
     private Author author;
+    private String publishedDate;
 
     public Article() {
     }
@@ -39,5 +40,13 @@ public class Article {
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public String getPublishedDate() {
+        return publishedDate;
+    }
+
+    public void setPublishedDate(String publishedDate) {
+        this.publishedDate = publishedDate;
     }
 }
