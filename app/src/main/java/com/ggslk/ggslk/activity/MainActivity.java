@@ -1,4 +1,4 @@
-package com.ggslk.ggslk;
+package com.ggslk.ggslk.activity;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,10 +10,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.ggslk.ggslk.ArticlesFragment;
+import com.ggslk.ggslk.fragment.EventsFragment;
+import com.ggslk.ggslk.HomeFragment;
+import com.ggslk.ggslk.R;
 import com.onesignal.OneSignal;
 
 public class MainActivity extends AppCompatActivity implements EventsFragment.OnFragmentInteractionListener, HomeFragment.OnFragmentInteractionListener,
-ArticlesFragment.OnFragmentInteractionListener {
+        ArticlesFragment.OnFragmentInteractionListener {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {

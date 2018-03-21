@@ -13,8 +13,10 @@
         android:paddingRight="6dp"
         android:paddingBottom="6dp">
 
+        <!--Accessories-->
         <android.support.constraint.ConstraintLayout
             android:layout_height="200dp"
+            android:layout_width="0dp"
             android:layout_column="0"
             android:layout_columnWeight="1"
             android:layout_marginTop="6dp"
@@ -31,35 +33,35 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/accessoriesArticleNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="20dp"
-                android:text="@string/text_article_name_default"
+                android:maxLines="2"
+                android:minLines="1"
+                android:paddingRight="16dp"
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/accessoriesImageView" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/accessoriesAuthorTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/text_article_author_default"
-                android:textColor="@color/colorPaleWhite"
+                android:textColor="@color/colorIcons"
                 android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:layout_constraintTop_toBottomOf="@+id/accessoriesArticleNameTextView" />
 
             <TextView
-                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
                 android:text="Accessories"
                 android:textColor="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -67,8 +69,10 @@
 
         </android.support.constraint.ConstraintLayout>
 
+        <!--Android-->
         <android.support.constraint.ConstraintLayout
             android:layout_height="200dp"
+            android:layout_width="0dp"
             android:layout_column="1"
             android:layout_columnWeight="1"
             android:layout_marginTop="6dp"
@@ -79,42 +83,153 @@
                 android:id="@+id/androidImageView"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorAccent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/androidArticleNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="20dp"
-                android:text="@string/text_article_name_default"
+                android:maxLines="2"
+                android:minLines="1"
+                android:paddingRight="16dp"
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/androidImageView" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/androidAuthorTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/text_article_author_default"
-                android:textColor="@color/colorPaleWhite"
+                android:textColor="@color/colorIcons"
                 android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                app:layout_constraintTop_toBottomOf="@+id/androidArticleNameTextView" />
 
             <TextView
-                android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
                 android:text="Android"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
+        <!--Chromebooks-->
+        <android.support.constraint.ConstraintLayout
+            android:layout_height="200dp"
+            android:layout_width="0dp"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="3dp"
+            android:background="@color/cardview_dark_background">
+
+            <ImageView
+                android:id="@+id/chromebooksImageView"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="@color/colorAccent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/chromebooksArticleNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
+                android:maxLines="2"
+                android:minLines="1"
+                android:paddingRight="16dp"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chromebooksImageView" />
+
+            <TextView
+                android:id="@+id/chromebooksAuthorTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/colorIcons"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chromebooksArticleNameTextView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:text="Chromebooks"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <!--Communication and Publishing-->
+        <android.support.constraint.ConstraintLayout
+            android:layout_height="200dp"
+            android:layout_width="0dp"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="3dp"
+            android:background="@color/cardview_dark_background">
+
+            <ImageView
+                android:id="@+id/communicationAndPublishingImageView"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="@color/colorAccent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/communicationAndPublishingArticleNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
+                android:maxLines="1"
+                android:minLines="1"
+                android:paddingRight="16dp"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/communicationAndPublishingImageView" />
+
+            <TextView
+                android:id="@+id/communicationAndPublishingAuthorTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/colorIcons"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/communicationAndPublishingArticleNameTextView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:text="Communication and Publishing"
                 android:textColor="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
