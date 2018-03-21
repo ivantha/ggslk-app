@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.ggslk.ggslk.ArticlesFragment;
+import com.ggslk.ggslk.fragment.ArticlesFragment;
 import com.ggslk.ggslk.fragment.EventsFragment;
 import com.ggslk.ggslk.HomeFragment;
 import com.ggslk.ggslk.R;
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements EventsFragment.On
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(R.id.navigation_home);
 
         // OneSignal service initialized
         OneSignal.startInit(this)

@@ -55,26 +55,8 @@ public class HomeFragment extends Fragment {
         a1.setAuthor(aa1);
         a1.setPublishedDate("123123123");
 
-        Article a2 = new Article();
-        a2.setTitle("Some title");
-        a2.setContent("Some content");
-        Author aa2 = new Author();
-        aa2.setName("My naaaame");
-        a2.setAuthor(aa2);
-        a2.setPublishedDate("123123123");
-
-        Article a3 = new Article();
-        a3.setTitle("Some title");
-        a3.setContent("Some content");
-        Author aa3 = new Author();
-        aa3.setName("My naaaame");
-        a3.setAuthor(aa3);
-        a3.setPublishedDate("123123123");
-
         ArrayList<Article> articles = new ArrayList<>();
         articles.add(a1);
-        articles.add(a2);
-        articles.add(a3);
 
         ArticleRecyclerAdapter articleRecyclerAdapter = new ArticleRecyclerAdapter(articles);
         recyclerView.setAdapter(articleRecyclerAdapter);

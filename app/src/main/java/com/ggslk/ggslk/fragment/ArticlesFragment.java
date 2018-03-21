@@ -1,4 +1,4 @@
-package com.ggslk.ggslk;
+package com.ggslk.ggslk.fragment;
 
 import android.content.Context;
 import android.net.Uri;
@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.ggslk.ggslk.R;
 import com.ggslk.ggslk.adapter.CategoryRecyclerAdapter;
 import com.ggslk.ggslk.model.Article;
 import com.ggslk.ggslk.model.Author;
@@ -75,7 +76,7 @@ public class ArticlesFragment extends Fragment {
                         try {
                             JSONArray categoriesJsonArray = response.getJSONArray("categories");
 
-                            for(int i = 0; i < categoriesJsonArray.length(); i++){
+                            for (int i = 0; i < categoriesJsonArray.length(); i++) {
                                 Category category = new Category();
                                 category.setSlug(categoriesJsonArray.getJSONObject(i).get("slug").toString());
                                 category.setTitle(categoriesJsonArray.getJSONObject(i).get("title").toString());
