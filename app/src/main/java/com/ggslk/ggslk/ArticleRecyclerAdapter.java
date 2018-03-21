@@ -28,7 +28,7 @@ public class ArticleRecyclerAdapter extends Adapter<ArticleRecyclerAdapter.Artic
 
         public ArticleViewHolder(View itemView) {
             super(itemView);
-            
+
         }
     }
 }
