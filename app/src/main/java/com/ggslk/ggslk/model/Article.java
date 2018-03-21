@@ -1,4 +1,6 @@
-package com.ggslk.ggslk;
+package com.ggslk.ggslk.model;
+
+import com.ggslk.ggslk.model.Author;
 
 public class Article {
     private String id;
@@ -6,6 +8,7 @@ public class Article {
     private String content;
     private Author author;
     private String publishedDate;
+    private String imageUrl;
 
     public Article() {
     }
@@ -48,5 +51,13 @@ public class Article {
 
     public void setPublishedDate(String publishedDate) {
         this.publishedDate = publishedDate;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

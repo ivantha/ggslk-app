@@ -10,6 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ggslk.ggslk.adapter.ArticleRecyclerAdapter;
+import com.ggslk.ggslk.model.Article;
+import com.ggslk.ggslk.model.Author;
+
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
