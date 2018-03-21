@@ -34,7 +34,10 @@ public class ArticlesFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private GridLayoutManager gridLayoutManager;
     private RecyclerView recyclerView;
+    private CategoryRecyclerAdapter categoryRecyclerAdapter;
     private RequestQueue mRequestQueue;
+
+    private final ArrayList<Category> categories = new ArrayList<>();
 
     public ArticlesFragment() {
         // Required empty public constructor
@@ -65,8 +68,6 @@ public class ArticlesFragment extends Fragment {
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        final ArrayList<Category> categories = new ArrayList<>();
-
         JsonObjectRequest jsonRequest = new JsonObjectRequest
                 (Request.Method.GET, "https://ggslk.com/api/get_category_index", null, new Response.Listener<JSONObject>() {
                     @Override
@@ -92,8 +93,7 @@ public class ArticlesFragment extends Fragment {
                                 categories.add(category);
                             }
 
-                            CategoryRecyclerAdapter categoryRecyclerAdapter = new CategoryRecyclerAdapter(categories);
-                            recyclerView.setAdapter(categoryRecyclerAdapter);
+                            categoryRecyclerAdapter.notifyDataSetChanged();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -109,7 +109,8 @@ public class ArticlesFragment extends Fragment {
                 });
         mRequestQueue.add(jsonRequest);
 
-        ///////>>>>>>>>>>>>>>> Add the adapter here and refresh later after the HTTP
+        categoryRecyclerAdapter = new CategoryRecyclerAdapter(categories);
+        recyclerView.setAdapter(categoryRecyclerAdapter);
 
         return view;
     }
