@@ -3,7 +3,8 @@
     android:id="@+id/articleRecyclerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ggslk.ggslk.HomeFragment">
+    tools:context="com.ggslk.ggslk.fragment.HomeFragment"
+    android:paddingBottom="70dp">
 
 
 </android.support.v7.widget.RecyclerView>

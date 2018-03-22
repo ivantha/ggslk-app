@@ -45,7 +45,6 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
 
     @Override
     public void onBindViewHolder(CategoryViewHolder holder, int position) {
-//        holder.content.setImageResource(persons.get(i).photoId);
         holder.categoryArticleName.setText(categories.get(position).getFeaturedArticle().getTitle());
         holder.categoryArticleAuthor.setText(categories.get(position).getFeaturedArticle().getAuthor().getName());
         holder.categoryTitle.setText(categories.get(position).getTitle());

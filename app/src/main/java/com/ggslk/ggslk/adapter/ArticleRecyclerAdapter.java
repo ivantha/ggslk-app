@@ -11,16 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.ggslk.ggslk.R;
 import com.ggslk.ggslk.model.Article;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONObject;
 
 import java.util.List;
 

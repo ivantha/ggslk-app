@@ -12,7 +12,7 @@ import android.view.MenuItem;
 
 import com.ggslk.ggslk.fragment.ArticlesFragment;
 import com.ggslk.ggslk.fragment.EventsFragment;
-import com.ggslk.ggslk.HomeFragment;
+import com.ggslk.ggslk.fragment.HomeFragment;
 import com.ggslk.ggslk.R;
 import com.onesignal.OneSignal;
 
