@@ -10,9 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.ggslk.ggslk.adapter.ArticleRecyclerAdapter;
 import com.ggslk.ggslk.model.Article;
 import com.ggslk.ggslk.model.Author;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -21,6 +31,10 @@ public class HomeFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private LinearLayoutManager linearLayoutManager;
     private RecyclerView recyclerView;
+    private ArticleRecyclerAdapter articleRecyclerAdapter;
+    private RequestQueue mRequestQueue;
+
+    private final ArrayList<Article> articles = new ArrayList<>();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -35,6 +49,10 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // RequestQueue initialized
+        mRequestQueue = Volley.newRequestQueue(getContext());
+
+        // Initialize LinearLayoutManager
         linearLayoutManager = new LinearLayoutManager(getContext());
     }
 
@@ -55,10 +73,43 @@ public class HomeFragment extends Fragment {
         a1.setAuthor(aa1);
         a1.setPublishedDate("123123123");
 
-        ArrayList<Article> articles = new ArrayList<>();
-        articles.add(a1);
+        JsonObjectRequest jsonRequest = new JsonObjectRequest
+                (Request.Method.GET, "https://ggslk.com/api/get_recent_posts?count=10&page=1", null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray articlesJsonArray = response.getJSONArray("posts");
 
-        ArticleRecyclerAdapter articleRecyclerAdapter = new ArticleRecyclerAdapter(articles);
+                            for (int i = 0; i < articlesJsonArray.length(); i++) {
+                                Article article = new Article();
+                                article.setTitle(articlesJsonArray.getJSONObject(i).get("title").toString());
+                                article.setContent(articlesJsonArray.getJSONObject(i).get("content").toString());
+                                article.setPublishedDate(articlesJsonArray.getJSONObject(i).get("date").toString().split(" ")[0]);
+
+                                Author author = new Author();
+                                author.setName(articlesJsonArray.getJSONObject(i).getJSONObject("author").get("name").toString());
+                                article.setAuthor(author);
+
+                                articles.add(article);
+                            }
+
+                            articleRecyclerAdapter.notifyDataSetChanged();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+        mRequestQueue.add(jsonRequest);
+
+        articleRecyclerAdapter = new ArticleRecyclerAdapter(articles);
         recyclerView.setAdapter(articleRecyclerAdapter);
 
         return view;

@@ -3,6 +3,7 @@ package com.ggslk.ggslk.adapter;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +33,8 @@ public class ArticleRecyclerAdapter extends Adapter<ArticleRecyclerAdapter.Artic
 //        holder.content.setImageResource(persons.get(i).photoId);
         holder.authorName.setText(articles.get(position).getAuthor().getName());
         holder.publishedDate.setText(articles.get(position).getPublishedDate());
-        holder.title.setText(articles.get(position).getTitle());
-        holder.content.setText(articles.get(position).getContent());
+        holder.title.setText(Html.fromHtml(articles.get(position).getTitle()));
+        holder.content.setText(Html.fromHtml(articles.get(position).getContent()));
     }
 
     @Override
