@@ -65,14 +65,6 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        Article a1 = new Article();
-        a1.setTitle("Some title");
-        a1.setContent("Some content");
-        Author aa1 = new Author();
-        aa1.setName("My naaaame");
-        a1.setAuthor(aa1);
-        a1.setPublishedDate("123123123");
-
         JsonObjectRequest jsonRequest = new JsonObjectRequest
                 (Request.Method.GET, "https://ggslk.com/api/get_recent_posts?count=10&page=1", null, new Response.Listener<JSONObject>() {
                     @Override
@@ -85,9 +77,11 @@ public class HomeFragment extends Fragment {
                                 article.setTitle(articlesJsonArray.getJSONObject(i).get("title").toString());
                                 article.setContent(articlesJsonArray.getJSONObject(i).get("content").toString());
                                 article.setPublishedDate(articlesJsonArray.getJSONObject(i).get("date").toString().split(" ")[0]);
+                                article.setImageUrl(articlesJsonArray.getJSONObject(i).getJSONObject("thumbnail_images").getJSONObject("full").get("url").toString());
 
                                 Author author = new Author();
                                 author.setName(articlesJsonArray.getJSONObject(i).getJSONObject("author").get("name").toString());
+                                author.setProfilePictureUrl("");
                                 article.setAuthor(author);
 
                                 articles.add(article);

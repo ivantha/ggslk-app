@@ -25,7 +25,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.CategoryViewHolder> {
-    List<Category> categories;
+    private List<Category> categories;
     private RequestQueue mRequestQueue;
 
     public CategoryRecyclerAdapter(List<Category> categories) {
