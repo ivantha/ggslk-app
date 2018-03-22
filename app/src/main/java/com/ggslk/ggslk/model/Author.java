@@ -2,6 +2,7 @@ package com.ggslk.ggslk.model;
 
 public class Author {
     private String id;
+    private String slug;
     private String name;
     private String profilePictureUrl;
 
@@ -14,6 +15,14 @@ public class Author {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
     public String getName() {

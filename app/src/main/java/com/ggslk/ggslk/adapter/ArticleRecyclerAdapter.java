@@ -1,5 +1,6 @@
 package com.ggslk.ggslk.adapter;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -15,13 +16,20 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.ggslk.ggslk.R;
 import com.ggslk.ggslk.model.Article;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ArticleRecyclerAdapter extends Adapter<ArticleRecyclerAdapter.ArticleViewHolder> {
     private List<Article> articles;
     private RequestQueue mRequestQueue;
+    private StorageReference storageRef;
 
     public ArticleRecyclerAdapter(List<Article> articles) {
         this.articles = articles;
@@ -35,11 +43,25 @@ public class ArticleRecyclerAdapter extends Adapter<ArticleRecyclerAdapter.Artic
         // RequestQueue initialized
         mRequestQueue = Volley.newRequestQueue(v.getContext());
 
+        // Initialize Firebase Storage
+        storageRef = FirebaseStorage.getInstance().getReference();
+
         return articleViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ArticleViewHolder holder, int position) {
+    public void onBindViewHolder(final ArticleViewHolder holder, final int position) {
+        storageRef.child("team/" + articles.get(position).getAuthor().getSlug() + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri.toString()).fit().centerCrop().into(holder.authorImageView);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Some error occurred
+            }
+        });
         holder.authorName.setText(articles.get(position).getAuthor().getName());
         holder.publishedDate.setText(articles.get(position).getPublishedDate());
         holder.title.setText(Html.fromHtml(articles.get(position).getTitle()));
@@ -59,6 +81,7 @@ public class ArticleRecyclerAdapter extends Adapter<ArticleRecyclerAdapter.Artic
 
     class ArticleViewHolder extends RecyclerView.ViewHolder {
         private CardView cardView;
+        private CircleImageView authorImageView;
         private TextView authorName;
         private TextView publishedDate;
         private TextView title;
@@ -68,6 +91,7 @@ public class ArticleRecyclerAdapter extends Adapter<ArticleRecyclerAdapter.Artic
         public ArticleViewHolder(View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.articleCardView);
+            authorImageView = itemView.findViewById(R.id.authorImageView);
             authorName = itemView.findViewById(R.id.authorNameTextView);
             publishedDate = itemView.findViewById(R.id.articleDateTextView);
             title = itemView.findViewById(R.id.articleTitleTextView);

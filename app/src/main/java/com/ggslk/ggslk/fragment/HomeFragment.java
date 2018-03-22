@@ -20,6 +20,8 @@ import com.ggslk.ggslk.R;
 import com.ggslk.ggslk.adapter.ArticleRecyclerAdapter;
 import com.ggslk.ggslk.model.Article;
 import com.ggslk.ggslk.model.Author;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -150,6 +152,7 @@ public class HomeFragment extends Fragment {
                                 Author author = new Author();
                                 author.setName(articlesJsonArray.getJSONObject(i).getJSONObject("author").get("name").toString());
                                 author.setProfilePictureUrl("");
+                                author.setSlug(articlesJsonArray.getJSONObject(i).getJSONObject("author").get("slug").toString());
                                 article.setAuthor(author);
 
                                 articles.add(article);

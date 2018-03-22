@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="2dp"
-    tools:context="com.ggslk.ggslk.fragment.ArticlesFragment">
+    tools:context="com.ggslk.ggslk.fragment.ArticlesFragment"
+    android:layout_marginBottom="70dp">
 
 </android.support.v7.widget.RecyclerView>
