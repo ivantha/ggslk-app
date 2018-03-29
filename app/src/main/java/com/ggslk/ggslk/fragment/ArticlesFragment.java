@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.ggslk.ggslk.R;
+import com.ggslk.ggslk.activity.MainActivity;
 import com.ggslk.ggslk.adapter.CategoryRecyclerAdapter;
 import com.ggslk.ggslk.model.Article;
 import com.ggslk.ggslk.model.Author;
@@ -52,9 +53,7 @@ public class ArticlesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // RequestQueue initialized
-        mRequestQueue = Volley.newRequestQueue(getContext());
+        mRequestQueue = MainActivity.getmRequestQueue();
 
         // Initialize GridLayoutManager
         gridLayoutManager = new GridLayoutManager(getContext(), 2, LinearLayoutManager.VERTICAL, false);

@@ -11,22 +11,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+import com.ggslk.ggslk.R;
 import com.ggslk.ggslk.fragment.ArticlesFragment;
 import com.ggslk.ggslk.fragment.EventsFragment;
 import com.ggslk.ggslk.fragment.HomeFragment;
-import com.ggslk.ggslk.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.onesignal.OneSignal;
+
+import org.jetbrains.annotations.Contract;
 
 public class MainActivity extends AppCompatActivity implements EventsFragment.OnFragmentInteractionListener, HomeFragment.OnFragmentInteractionListener,
         ArticlesFragment.OnFragmentInteractionListener {
 
-    private FirebaseAuth mAuth;
-    FirebaseUser currentUser;
+    private static FirebaseAuth mAuth;                 // Firebase Auth
+    private static FirebaseUser currentUser;           // Firebase logged in user
+    private static StorageReference mStorageRef;        // Firebase Storage
+    private static RequestQueue mRequestQueue;         // Volley request queue
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -70,6 +78,12 @@ public class MainActivity extends AppCompatActivity implements EventsFragment.On
 
         // Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
+        // RequestQueue initialized
+        mRequestQueue = Volley.newRequestQueue(MainActivity.this);
+
+        // Firebase Storage
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         // OneSignal service initialized
         OneSignal.startInit(this)
@@ -117,5 +131,25 @@ public class MainActivity extends AppCompatActivity implements EventsFragment.On
     @Override
     public void onArticlesFragmentInteraction(Uri uri) {
 
+    }
+
+    @Contract(pure = true)
+    public static FirebaseAuth getmAuth() {
+        return mAuth;
+    }
+
+    @Contract(pure = true)
+    public static FirebaseUser getCurrentUser() {
+        return currentUser;
+    }
+
+    @Contract(pure = true)
+    public static StorageReference getmStorageRef() {
+        return mStorageRef;
+    }
+
+    @Contract(pure = true)
+    public static RequestQueue getmRequestQueue() {
+        return mRequestQueue;
     }
 }

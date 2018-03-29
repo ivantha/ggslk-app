@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.ggslk.ggslk.R;
+import com.ggslk.ggslk.activity.MainActivity;
 import com.ggslk.ggslk.model.Category;
 import com.squareup.picasso.Picasso;
 
@@ -37,8 +38,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_category, parent, false);
         CategoryViewHolder categoryViewHolder = new CategoryViewHolder(v);
 
-        // RequestQueue initialized
-        mRequestQueue = Volley.newRequestQueue(v.getContext());
+        mRequestQueue = MainActivity.getmRequestQueue();
 
         return categoryViewHolder;
     }

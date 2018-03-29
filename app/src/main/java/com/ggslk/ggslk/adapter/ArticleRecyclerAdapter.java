@@ -13,17 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.ggslk.ggslk.R;
+import com.ggslk.ggslk.activity.MainActivity;
 import com.ggslk.ggslk.model.Article;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
@@ -32,9 +26,9 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ArticleRecyclerAdapter extends Adapter<ArticleRecyclerAdapter.ArticleViewHolder> {
+    private StorageReference storageRef;        // Firebase Storage
+    private RequestQueue mRequestQueue;         // Volley request queue
     private List<Article> articles;
-    private RequestQueue mRequestQueue;
-    private StorageReference storageRef;
 
     public ArticleRecyclerAdapter(List<Article> articles) {
         this.articles = articles;
@@ -45,11 +39,8 @@ public class ArticleRecyclerAdapter extends Adapter<ArticleRecyclerAdapter.Artic
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_article, parent, false);
         ArticleViewHolder articleViewHolder = new ArticleViewHolder(v);
 
-        // RequestQueue initialized
-        mRequestQueue = Volley.newRequestQueue(v.getContext());
-
-        // Initialize Firebase Storage
-        storageRef = FirebaseStorage.getInstance().getReference();
+        mRequestQueue = MainActivity.getmRequestQueue();
+        storageRef = MainActivity.getmStorageRef();
 
         return articleViewHolder;
     }

@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.ggslk.ggslk.R;
+import com.ggslk.ggslk.activity.MainActivity;
 import com.ggslk.ggslk.adapter.ArticleRecyclerAdapter;
 import com.ggslk.ggslk.model.Article;
 import com.ggslk.ggslk.model.Author;
@@ -30,12 +31,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
-
     private OnFragmentInteractionListener mListener;
+    private RequestQueue mRequestQueue;
+
     private LinearLayoutManager linearLayoutManager;
     private RecyclerView recyclerView;
     private ArticleRecyclerAdapter articleRecyclerAdapter;
-    private RequestQueue mRequestQueue;
 
     private final ArrayList<Article> articles = new ArrayList<>();
 
@@ -57,9 +58,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // RequestQueue initialized
-        mRequestQueue = Volley.newRequestQueue(getContext());
+        mRequestQueue = MainActivity.getmRequestQueue();
 
         // Initialize LinearLayoutManager
         linearLayoutManager = new LinearLayoutManager(getContext());
