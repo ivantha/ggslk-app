@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -59,7 +60,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     public void onBindViewHolder(@NonNull final CategoryViewHolder holder, final int position, @NonNull List<Object> payloads) {
         super.onBindViewHolder(holder, position, payloads);
 
-        mRequestQueue.add(new JsonObjectRequest
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, "https://ggslk.com/api/get_category_posts?slug=" + categories.get(position).getSlug() + "&count=1", null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -89,7 +90,13 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
                     }
-                }));
+                });
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(500000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        mRequestQueue.add(jsonObjectRequest);
     }
 
     class CategoryViewHolder extends RecyclerView.ViewHolder {

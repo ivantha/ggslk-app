@@ -54,6 +54,7 @@ public class ArticlesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRequestQueue = MainActivity.getmRequestQueue();
+        mRequestQueue = Volley.newRequestQueue(getContext());
 
         // Initialize GridLayoutManager
         gridLayoutManager = new GridLayoutManager(getContext(), 2, LinearLayoutManager.VERTICAL, false);
@@ -69,7 +70,7 @@ public class ArticlesFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest
-                (Request.Method.GET, "https://ggslk.com/api/get_category_index", null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, "https://ggslk.com/api/get_category_index",null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.ggslk.ggslk.R;
@@ -93,6 +94,13 @@ public class ArticleRecyclerAdapter extends Adapter<ArticleRecyclerAdapter.Artic
             title = itemView.findViewById(R.id.articleTitleTextView);
             content = itemView.findViewById(R.id.articleContentTextView);
             articleImageView = itemView.findViewById(R.id.articleImageView);
+
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
     }
 }
