@@ -8,16 +8,6 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:orientation="vertical"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:id="@+id/container">-->
-
-        <!---->
-    <!--</RelativeLayout>-->
-
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"

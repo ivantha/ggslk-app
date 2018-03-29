@@ -1,5 +1,6 @@
 package com.ggslk.ggslk.adapter;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.ggslk.ggslk.R;
+import com.ggslk.ggslk.activity.ArticleViewActivity;
 import com.ggslk.ggslk.activity.MainActivity;
 import com.ggslk.ggslk.model.Article;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -98,7 +100,8 @@ public class ArticleRecyclerAdapter extends Adapter<ArticleRecyclerAdapter.Artic
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent intent = new Intent(MainActivity.getContext(), ArticleViewActivity.class);
+                    MainActivity.getContext().startActivity(intent);
                 }
             });
         }
