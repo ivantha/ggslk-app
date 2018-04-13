@@ -1,6 +1,5 @@
 package com.ggslk.ggslk.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -35,8 +34,6 @@ import com.onesignal.OneSignal;
 import org.jetbrains.annotations.Contract;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static Context context;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -113,17 +110,17 @@ public class MainActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.navigation_events:
-                    fragment = EventsFragment.newInstance();
+                    fragment = EventsFragment.Companion.newInstance();
                     transaction.replace(R.id.container, fragment);
                     transaction.commit();
                     return true;
                 case R.id.navigation_home:
-                    fragment = HomeFragment.newInstance();
+                    fragment = HomeFragment.Companion.newInstance();
                     transaction.replace(R.id.container, fragment);
                     transaction.commit();
                     return true;
                 case R.id.navigation_articles:
-                    fragment = ArticlesFragment.newInstance();
+                    fragment = ArticlesFragment.Companion.newInstance();
                     transaction.replace(R.id.container, fragment);
                     transaction.commit();
                     return true;
@@ -173,8 +170,6 @@ public class MainActivity extends AppCompatActivity {
         // Call syncHashedEmail anywhere in your app if you have the user's email.
         // This improves the effectiveness of OneSignal's "best-time" notification scheduling feature.
         // OneSignal.syncHashedEmail(userEmail);
-
-        context = MainActivity.this;
     }
 
     @Override
@@ -197,11 +192,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-    }
-
-    @Contract(pure = true)
-    public static Context getContext() {
-        return context;
     }
 
     @Contract(pure = true)
