@@ -1,7 +1,6 @@
 package com.ggslk.ggslk.activity;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -35,8 +34,7 @@ import com.onesignal.OneSignal;
 
 import org.jetbrains.annotations.Contract;
 
-public class MainActivity extends AppCompatActivity implements EventsFragment.OnFragmentInteractionListener, HomeFragment.OnFragmentInteractionListener,
-        ArticlesFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity {
 
     private static Context context;
 
@@ -115,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements EventsFragment.On
 
             switch (item.getItemId()) {
                 case R.id.navigation_events:
-                    fragment = EventsFragment.newInstance("p1", "p2");
+                    fragment = EventsFragment.newInstance();
                     transaction.replace(R.id.container, fragment);
                     transaction.commit();
                     return true;
@@ -199,21 +197,6 @@ public class MainActivity extends AppCompatActivity implements EventsFragment.On
                 }
             });
         }
-    }
-
-    @Override
-    public void onHomeFragmentInteraction(Uri uri) {
-
-    }
-
-    @Override
-    public void onEventsFragmentInteraction(Uri uri) {
-
-    }
-
-    @Override
-    public void onArticlesFragmentInteraction(Uri uri) {
-
     }
 
     @Contract(pure = true)
