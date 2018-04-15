@@ -1,11 +1,10 @@
-<android.support.v7.widget.RecyclerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/categoryRecyclerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="2dp"
-    tools:context="com.ggslk.ggslk.fragment.ArticlesFragment"
-    android:paddingBottom="70dp">
+    android:paddingBottom="70dp"
+    tools:context="com.ggslk.ggslk.fragment.ArticlesFragment">
 
 </android.support.v7.widget.RecyclerView>

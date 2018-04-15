@@ -15,6 +15,7 @@ import com.ggslk.ggslk.R
 import com.ggslk.ggslk.activity.ArticleViewActivity
 import com.ggslk.ggslk.activity.MainActivity
 import com.ggslk.ggslk.model.Article
+import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
@@ -28,7 +29,7 @@ class ArticleRecyclerAdapter(private val articles: List<Article>) : Adapter<Arti
         val articleViewHolder = ArticleViewHolder(v)
 
         mRequestQueue = MainActivity.getmRequestQueue()
-        storageRef = MainActivity.getmStorageRef()
+        storageRef = FirebaseStorage.getInstance().reference
 
         return articleViewHolder
     }
@@ -59,8 +60,8 @@ class ArticleRecyclerAdapter(private val articles: List<Article>) : Adapter<Arti
 
         init {
             cardView.setOnClickListener {
-                val intent = Intent(MainActivity.getContext(), ArticleViewActivity::class.java)
-                MainActivity.getContext().startActivity(intent)
+                val intent = Intent(MainActivity.context, ArticleViewActivity::class.java)
+                MainActivity.context!!.startActivity(intent)
             }
         }
     }
