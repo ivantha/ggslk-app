@@ -62,10 +62,12 @@ class MainActivity : AppCompatActivity() {
 
             when (id) {
                 R.id.nav_home -> {
-                    // Handle the camera action
+                    val intent = Intent(this@MainActivity, MainActivity::class.java)
+                    this@MainActivity.startActivity(intent)
                 }
                 R.id.nav_favorites -> {
-
+                    val intent = Intent(this@MainActivity, FavoritesActivity::class.java)
+                    this@MainActivity.startActivity(intent)
                 }
                 R.id.nav_blog -> {
                     val openURL = Intent(android.content.Intent.ACTION_VIEW)

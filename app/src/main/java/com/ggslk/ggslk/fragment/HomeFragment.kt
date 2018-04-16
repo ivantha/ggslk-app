@@ -68,7 +68,6 @@ class HomeFragment : Fragment() {
         })
 
         homeFragmentSwipeContainer.setOnRefreshListener({
-            println("--------------------------------------------------------------------------------------------------------")
             Session.articles.clear()
             pageNo = 1
             loadRecentPosts(10, pageNo++)
@@ -110,16 +109,21 @@ class HomeFragment : Fragment() {
             } catch (e: JSONException) {
                 e.printStackTrace()
             } finally {
-                println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-                loading = true
-                homeFragmentSwipeContainer.isRefreshing = false
+                endLoading()
             }
         }, Response.ErrorListener { error ->
             error.printStackTrace()
-            loading = true
-            println("sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
-            homeFragmentSwipeContainer.isRefreshing = false
+            endLoading()
         })
         Session.mRequestQueue!!.add(jsonRequest)
+    }
+
+    private fun endLoading(){
+        try {
+            loading = true
+            homeFragmentSwipeContainer.isRefreshing = false
+        }catch (e: Exception){
+            // Handle this
+        }
     }
 }
