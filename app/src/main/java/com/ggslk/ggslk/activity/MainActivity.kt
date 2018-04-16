@@ -1,5 +1,7 @@
 package com.ggslk.ggslk.activity
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.NavigationView
@@ -23,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.onesignal.OneSignal
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -65,10 +68,14 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 R.id.nav_blog -> {
-
+                    val openURL = Intent(android.content.Intent.ACTION_VIEW)
+                    openURL.data = Uri.parse("https://ggslk.com/")
+                    startActivity(openURL)
                 }
                 R.id.nav_facebook -> {
-
+                    val openURL = Intent(android.content.Intent.ACTION_VIEW)
+                    openURL.data = Uri.parse("https://www.facebook.com/GGSLK.SriLanka/?ref=br_rs")
+                    startActivity(openURL)
                 }
                 R.id.nav_profile -> {
 
