@@ -1,6 +1,8 @@
 package com.ggslk.ggslk.model
 
-class Author {
+import java.io.Serializable
+
+class Author : Serializable{
     var id: String? = null
     var slug: String? = null
     var name: String? = null

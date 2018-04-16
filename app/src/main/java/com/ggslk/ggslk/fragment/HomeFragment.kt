@@ -45,7 +45,7 @@ class HomeFragment : Fragment() {
 
         loadRecentPosts(10, pageNo++)
 
-        articleRecyclerAdapter = ArticleRecyclerAdapter(Session.articles)
+        articleRecyclerAdapter = ArticleRecyclerAdapter(context!!, Session.articles)
         recyclerView!!.adapter = articleRecyclerAdapter
 
         recyclerView!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {

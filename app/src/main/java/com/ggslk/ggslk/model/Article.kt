@@ -1,6 +1,8 @@
 package com.ggslk.ggslk.model
 
-class Article {
+import java.io.Serializable
+
+class Article : Serializable{
     var id: String? = null
     var title: String? = null
     var content: String? = null

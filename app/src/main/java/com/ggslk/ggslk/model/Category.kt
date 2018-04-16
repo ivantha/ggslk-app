@@ -1,6 +1,8 @@
 package com.ggslk.ggslk.model
 
-class Category {
+import java.io.Serializable
+
+class Category : Serializable {
     var id: String? = null
     var slug: String? = null
     var title: String? = null

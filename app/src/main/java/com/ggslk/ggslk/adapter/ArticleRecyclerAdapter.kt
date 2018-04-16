@@ -1,5 +1,6 @@
 package com.ggslk.ggslk.adapter
 
+import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
@@ -12,14 +13,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.ggslk.ggslk.R
 import com.ggslk.ggslk.activity.ArticleViewActivity
-import com.ggslk.ggslk.activity.MainActivity
 import com.ggslk.ggslk.model.Article
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
-class ArticleRecyclerAdapter(private val articles: List<Article>) : Adapter<ArticleRecyclerAdapter.ArticleViewHolder>() {
+class ArticleRecyclerAdapter(private val context: Context, private val articles: List<Article>) : Adapter<ArticleRecyclerAdapter.ArticleViewHolder>() {
     private var storageRef: StorageReference? = null        // Firebase Storage
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
@@ -32,6 +32,7 @@ class ArticleRecyclerAdapter(private val articles: List<Article>) : Adapter<Arti
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
+        holder.article = articles[position]
         storageRef!!.child("team/" + articles[position].author!!.slug + ".jpg").downloadUrl.addOnSuccessListener { uri -> Picasso.get().load(uri.toString()).fit().centerCrop().into(holder.authorImageView) }.addOnFailureListener {
             // Some error occurred
         }
@@ -47,18 +48,21 @@ class ArticleRecyclerAdapter(private val articles: List<Article>) : Adapter<Arti
     }
 
     inner class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var article: Article? = null
+
         val cardView: CardView = itemView.findViewById(R.id.articleCardView)
         val authorImageView: CircleImageView = itemView.findViewById(R.id.authorImageView)
         val authorName: TextView = itemView.findViewById(R.id.authorNameTextView)
         val publishedDate: TextView = itemView.findViewById(R.id.articleDateTextView)
-        val title: TextView = itemView.findViewById(R.id.articleTitleTextView)
+        val title: TextView = itemView.findViewById(R.id.articleActivityTitleTextView)
         val content: TextView = itemView.findViewById(R.id.articleContentTextView)
         val articleImageView: ImageView = itemView.findViewById(R.id.articleImageView)
 
         init {
             cardView.setOnClickListener {
-                val intent = Intent(MainActivity.context, ArticleViewActivity::class.java)
-                MainActivity.context!!.startActivity(intent)
+                val intent = Intent(context, ArticleViewActivity::class.java)
+                intent.putExtra("article", article)
+                context.startActivity(intent)
             }
         }
     }

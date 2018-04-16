@@ -1,6 +1,5 @@
 package com.ggslk.ggslk.activity
 
-import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.NavigationView
@@ -22,17 +21,14 @@ import com.ggslk.ggslk.fragment.EventsFragment
 import com.ggslk.ggslk.fragment.HomeFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.onesignal.OneSignal
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    companion object {
-        // Remove thissssss>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        var context: Context? = null
-    }
-
     private val onDrawerNavigationItemSelectedListener = object : NavigationView.OnNavigationItemSelectedListener {
         fun onBackPressed() {
-            val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
+            val drawer = findViewById<View>(R.id.drawerLayout) as DrawerLayout
             if (drawer.isDrawerOpen(GravityCompat.START)) {
                 drawer.closeDrawer(GravityCompat.START)
             } else {
@@ -82,7 +78,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
+            val drawer = findViewById<View>(R.id.drawerLayout) as DrawerLayout
             drawer.closeDrawer(GravityCompat.START)
             return true
         }
@@ -124,15 +120,12 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
-        val toggle = ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawer.addDrawerListener(toggle)
+        val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        val navigationView = findViewById<NavigationView>(R.id.nav_view)
-        navigationView.setNavigationItemSelectedListener(onDrawerNavigationItemSelectedListener)
+        navView.setNavigationItemSelectedListener(onDrawerNavigationItemSelectedListener)
 
-        val navigation = findViewById<BottomNavigationView>(R.id.navigation)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         navigation.selectedItemId = R.id.navigation_home
 
@@ -148,8 +141,6 @@ class MainActivity : AppCompatActivity() {
         // Call syncHashedEmail anywhere in your app if you have the user's email.
         // This improves the effectiveness of OneSignal's "best-time" notification scheduling feature.
         // OneSignal.syncHashedEmail(userEmail);
-
-        context = this
     }
 
     override fun onStart() {

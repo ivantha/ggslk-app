@@ -70,7 +70,7 @@ class CategoriesFragment : Fragment() {
         }, Response.ErrorListener { error -> error.printStackTrace() })
         Session.mRequestQueue!!.add(jsonRequest)
 
-        categoryRecyclerAdapter = CategoryRecyclerAdapter(Session.categories)
+        categoryRecyclerAdapter = CategoryRecyclerAdapter(context!!, Session.categories)
         recyclerView!!.adapter = categoryRecyclerAdapter
 
         return view

@@ -1,5 +1,6 @@
 package com.ggslk.ggslk.adapter
 
+import android.content.Context
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -17,7 +18,7 @@ import com.ggslk.ggslk.model.Category
 import com.squareup.picasso.Picasso
 import org.json.JSONException
 
-class CategoryRecyclerAdapter(private val categories: List<Category>) : RecyclerView.Adapter<CategoryRecyclerAdapter.CategoryViewHolder>() {
+class CategoryRecyclerAdapter(private val context: Context, private val categories: List<Category>) : RecyclerView.Adapter<CategoryRecyclerAdapter.CategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_category, parent, false)
