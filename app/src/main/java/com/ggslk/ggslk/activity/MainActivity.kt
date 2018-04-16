@@ -14,17 +14,21 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import com.ggslk.ggslk.R
-import com.ggslk.ggslk.fragment.ArticlesFragment
+import com.ggslk.ggslk.common.Session
+import com.ggslk.ggslk.fragment.CategoriesFragment
 import com.ggslk.ggslk.fragment.EventsFragment
 import com.ggslk.ggslk.fragment.HomeFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.onesignal.OneSignal
-import org.jetbrains.annotations.Contract
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        // Remove thissssss>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        var context: Context? = null
+    }
 
     private val onDrawerNavigationItemSelectedListener = object : NavigationView.OnNavigationItemSelectedListener {
         fun onBackPressed() {
@@ -57,18 +61,25 @@ class MainActivity : AppCompatActivity() {
             // Handle navigation view item clicks here.
             val id = item.itemId
 
-            if (id == R.id.nav_camera) {
-                // Handle the camera action
-            } else if (id == R.id.nav_gallery) {
+            when (id) {
+                R.id.nav_home -> {
+                    // Handle the camera action
+                }
+                R.id.nav_favorites -> {
 
-            } else if (id == R.id.nav_slideshow) {
+                }
+                R.id.nav_blog -> {
 
-            } else if (id == R.id.nav_manage) {
+                }
+                R.id.nav_facebook -> {
 
-            } else if (id == R.id.nav_share) {
+                }
+                R.id.nav_profile -> {
 
-            } else if (id == R.id.nav_send) {
+                }
+                R.id.nav_settings -> {
 
+                }
             }
 
             val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
@@ -95,8 +106,8 @@ class MainActivity : AppCompatActivity() {
                 transaction.commit()
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_articles -> {
-                fragment = ArticlesFragment.newInstance()
+            R.id.navigation_categories -> {
+                fragment = CategoriesFragment.newInstance()
                 transaction.replace(R.id.container, fragment)
                 transaction.commit()
                 return@OnNavigationItemSelectedListener true
@@ -114,8 +125,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
-        val toggle = ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        val toggle = ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -127,7 +137,7 @@ class MainActivity : AppCompatActivity() {
         navigation.selectedItemId = R.id.navigation_home
 
         // RequestQueue initialized
-        mRequestQueue = Volley.newRequestQueue(this@MainActivity)
+        Session.mRequestQueue = Volley.newRequestQueue(this@MainActivity)
 
         // OneSignal service initialized
         OneSignal.startInit(this)
@@ -158,19 +168,6 @@ class MainActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT).show()
                 }
             }
-        }
-    }
-
-    companion object {
-
-        // Remove thisss
-        var context: Context? = null
-
-        private var mRequestQueue: RequestQueue? = null         // Volley request queue
-
-        @Contract(pure = true)
-        fun getmRequestQueue(): RequestQueue? {
-            return mRequestQueue
         }
     }
 }

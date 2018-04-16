@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.android.volley.RequestQueue
 import com.ggslk.ggslk.R
 import com.ggslk.ggslk.activity.ArticleViewActivity
 import com.ggslk.ggslk.activity.MainActivity
@@ -22,13 +21,11 @@ import de.hdodenhof.circleimageview.CircleImageView
 
 class ArticleRecyclerAdapter(private val articles: List<Article>) : Adapter<ArticleRecyclerAdapter.ArticleViewHolder>() {
     private var storageRef: StorageReference? = null        // Firebase Storage
-    private var mRequestQueue: RequestQueue? = null         // Volley request queue
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_article, parent, false)
         val articleViewHolder = ArticleViewHolder(v)
 
-        mRequestQueue = MainActivity.getmRequestQueue()
         storageRef = FirebaseStorage.getInstance().reference
 
         return articleViewHolder

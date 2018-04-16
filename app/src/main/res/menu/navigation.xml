@@ -12,8 +12,8 @@
         android:title="@string/title_home" />
 
     <item
-        android:id="@+id/navigation_articles"
+        android:id="@+id/navigation_categories"
         android:icon="@drawable/ic_articles_black_24dp"
-        android:title="@string/title_articles" />
+        android:title="@string/title_categories" />
 
 </menu>

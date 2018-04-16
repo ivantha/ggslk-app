@@ -9,33 +9,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.android.volley.Request
-import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
 import com.ggslk.ggslk.R
-import com.ggslk.ggslk.activity.MainActivity
 import com.ggslk.ggslk.adapter.CategoryRecyclerAdapter
+import com.ggslk.ggslk.common.Session
 import com.ggslk.ggslk.model.Article
 import com.ggslk.ggslk.model.Author
 import com.ggslk.ggslk.model.Category
 import org.json.JSONException
-import java.util.*
 
 
-class ArticlesFragment : Fragment() {
-
+class CategoriesFragment : Fragment() {
     private var gridLayoutManager: GridLayoutManager? = null
     private var recyclerView: RecyclerView? = null
     private var categoryRecyclerAdapter: CategoryRecyclerAdapter? = null
-    private var mRequestQueue: RequestQueue? = null
-
-    private val categories = ArrayList<Category>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mRequestQueue = MainActivity.getmRequestQueue()
-        mRequestQueue = Volley.newRequestQueue(context!!)
 
         // Initialize GridLayoutManager
         gridLayoutManager = GridLayoutManager(context, 2, LinearLayoutManager.VERTICAL, false)
@@ -43,7 +34,7 @@ class ArticlesFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_articles, container, false)
+        val view = inflater.inflate(R.layout.fragment_categories, container, false)
 
         recyclerView = view.findViewById(R.id.categoryRecyclerView)
         recyclerView!!.layoutManager = gridLayoutManager
@@ -68,7 +59,7 @@ class ArticlesFragment : Fragment() {
 
                     category.featuredArticle = article
 
-                    categories.add(category)
+                    Session.categories.add(category)
                 }
 
                 categoryRecyclerAdapter!!.notifyDataSetChanged()
@@ -77,9 +68,9 @@ class ArticlesFragment : Fragment() {
                 e.printStackTrace()
             }
         }, Response.ErrorListener { error -> error.printStackTrace() })
-        mRequestQueue!!.add(jsonRequest)
+        Session.mRequestQueue!!.add(jsonRequest)
 
-        categoryRecyclerAdapter = CategoryRecyclerAdapter(categories)
+        categoryRecyclerAdapter = CategoryRecyclerAdapter(Session.categories)
         recyclerView!!.adapter = categoryRecyclerAdapter
 
         return view
@@ -87,8 +78,8 @@ class ArticlesFragment : Fragment() {
 
     companion object {
 
-        fun newInstance(): ArticlesFragment {
-            return ArticlesFragment()
+        fun newInstance(): CategoriesFragment {
+            return CategoriesFragment()
         }
     }
 

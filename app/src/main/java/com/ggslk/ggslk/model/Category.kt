@@ -5,4 +5,5 @@ class Category {
     var slug: String? = null
     var title: String? = null
     var featuredArticle: Article? = null
+    var articles: ArrayList<Article> = ArrayList()
 }

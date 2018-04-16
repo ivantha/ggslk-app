@@ -8,25 +8,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.android.volley.Request
-import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.ggslk.ggslk.R
-import com.ggslk.ggslk.activity.MainActivity
 import com.ggslk.ggslk.adapter.ArticleRecyclerAdapter
+import com.ggslk.ggslk.common.Session
 import com.ggslk.ggslk.model.Article
 import com.ggslk.ggslk.model.Author
 import org.json.JSONException
-import java.util.*
 
 class HomeFragment : Fragment() {
-    private var mRequestQueue: RequestQueue? = null
-
     private var linearLayoutManager: LinearLayoutManager? = null
     private var recyclerView: RecyclerView? = null
     private var articleRecyclerAdapter: ArticleRecyclerAdapter? = null
-
-    private val articles = ArrayList<Article>()
 
     private var loading = true
     private var pastVisibleItems: Int = 0
@@ -36,7 +30,6 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mRequestQueue = MainActivity.getmRequestQueue()
 
         // Initialize LinearLayoutManager
         linearLayoutManager = LinearLayoutManager(context)
@@ -52,7 +45,7 @@ class HomeFragment : Fragment() {
 
         loadRecentPosts(10, pageNo++)
 
-        articleRecyclerAdapter = ArticleRecyclerAdapter(articles)
+        articleRecyclerAdapter = ArticleRecyclerAdapter(Session.articles)
         recyclerView!!.adapter = articleRecyclerAdapter
 
         recyclerView!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -95,7 +88,7 @@ class HomeFragment : Fragment() {
                     author.slug = articlesJsonArray.getJSONObject(i).getJSONObject("author").get("slug").toString()
                     article.author = author
 
-                    articles.add(article)
+                    Session.articles.add(article)
                 }
 
                 articleRecyclerAdapter!!.notifyDataSetChanged()
@@ -108,7 +101,7 @@ class HomeFragment : Fragment() {
             error.printStackTrace()
             loading = true
         })
-        mRequestQueue!!.add(jsonRequest)
+        Session.mRequestQueue!!.add(jsonRequest)
     }
 
     companion object {

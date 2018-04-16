@@ -9,23 +9,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
-import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.ggslk.ggslk.R
-import com.ggslk.ggslk.activity.MainActivity
+import com.ggslk.ggslk.common.Session
 import com.ggslk.ggslk.model.Category
 import com.squareup.picasso.Picasso
 import org.json.JSONException
 
 class CategoryRecyclerAdapter(private val categories: List<Category>) : RecyclerView.Adapter<CategoryRecyclerAdapter.CategoryViewHolder>() {
-    private var mRequestQueue: RequestQueue? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_category, parent, false)
         val categoryViewHolder = CategoryViewHolder(v)
-
-        mRequestQueue = MainActivity.getmRequestQueue()
 
         return categoryViewHolder
     }
@@ -69,7 +65,7 @@ class CategoryRecyclerAdapter(private val categories: List<Category>) : Recycler
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
 
-        mRequestQueue!!.add(jsonObjectRequest)
+        Session.mRequestQueue!!.add(jsonObjectRequest)
     }
 
     inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
