@@ -7,7 +7,6 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import com.ggslk.ggslk.R
 import com.ggslk.ggslk.model.Article
-import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_article_view.*
 
@@ -29,11 +28,7 @@ class ArticleViewActivity : AppCompatActivity() {
 
         // Set author
         articleActivityAuthorNameTextView.text = article.author!!.name
-        FirebaseStorage.getInstance().reference.child("team/" + article.author!!.slug + ".jpg").downloadUrl.addOnSuccessListener { uri ->
-            Picasso.get().load(uri.toString()).fit().centerCrop().into(articleActivityAuthorImageView)
-        }.addOnFailureListener {
-            // Some error occurred
-        }
+        Picasso.get().load("file:///android_asset/team/${article.author!!.id}.jpg").fit().centerCrop().into(articleActivityAuthorImageView)
         articleActivityArticleDateTextView.text = article.publishedDate
     }
 

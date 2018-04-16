@@ -15,47 +15,47 @@ import com.ggslk.ggslk.adapter.ArticleRecyclerAdapter
 import com.ggslk.ggslk.common.Session
 import com.ggslk.ggslk.model.Article
 import com.ggslk.ggslk.model.Author
+import kotlinx.android.synthetic.main.fragment_home.*
 import org.json.JSONException
 
+
 class HomeFragment : Fragment() {
-    private var linearLayoutManager: LinearLayoutManager? = null
-    private var recyclerView: RecyclerView? = null
-    private var articleRecyclerAdapter: ArticleRecyclerAdapter? = null
 
-    private var loading = true
-    private var pastVisibleItems: Int = 0
-    private var visibleItemCount: Int = 0
-    private var totalItemCount: Int = 0
-    private var pageNo = 1
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // Initialize LinearLayoutManager
-        linearLayoutManager = LinearLayoutManager(context)
+    companion object {
+        fun newInstance(): HomeFragment {
+            return HomeFragment()
+        }
     }
+
+    private var articleRecyclerAdapter: ArticleRecyclerAdapter? = null
+    private var loading = true
+    private var pageNo = 1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        recyclerView = view.findViewById(R.id.articleRecyclerView)
-        recyclerView!!.layoutManager = linearLayoutManager
-        recyclerView!!.setHasFixedSize(true)
+        return view
+    }
 
-        loadRecentPosts(10, pageNo++)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        var linearLayoutManager = LinearLayoutManager(context)
+        articleRecyclerView.layoutManager = linearLayoutManager
+        articleRecyclerView.setHasFixedSize(true)
 
         articleRecyclerAdapter = ArticleRecyclerAdapter(context!!, Session.articles)
-        recyclerView!!.adapter = articleRecyclerAdapter
+        articleRecyclerView.adapter = articleRecyclerAdapter
 
-        recyclerView!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        articleRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 if (dy > 0)
                 // Check for scroll down
                 {
-                    visibleItemCount = linearLayoutManager!!.childCount
-                    totalItemCount = linearLayoutManager!!.itemCount
-                    pastVisibleItems = linearLayoutManager!!.findFirstVisibleItemPosition()
+                    val visibleItemCount = linearLayoutManager.childCount
+                    val totalItemCount = linearLayoutManager.itemCount
+                    val pastVisibleItems = linearLayoutManager.findFirstVisibleItemPosition()
 
                     if (loading) {
                         if (visibleItemCount + pastVisibleItems >= totalItemCount) {
@@ -67,7 +67,21 @@ class HomeFragment : Fragment() {
             }
         })
 
-        return view
+        homeFragmentSwipeContainer.setOnRefreshListener({
+            println("--------------------------------------------------------------------------------------------------------")
+            Session.articles.clear()
+            pageNo = 1
+            loadRecentPosts(10, pageNo++)
+        })
+
+        // Trigger auto refresh on the first time
+        homeFragmentSwipeContainer!!.post({
+            homeFragmentSwipeContainer!!.isRefreshing = true
+
+            Session.articles.clear()
+            pageNo = 1
+            loadRecentPosts(10, pageNo++)
+        })
     }
 
     private fun loadRecentPosts(count: Int, page: Int) {
@@ -83,6 +97,7 @@ class HomeFragment : Fragment() {
                     article.imageUrl = articlesJsonArray.getJSONObject(i).getJSONObject("thumbnail_images").getJSONObject("full").get("url").toString()
 
                     val author = Author()
+                    author.id = articlesJsonArray.getJSONObject(i).getJSONObject("author").get("id").toString()
                     author.name = articlesJsonArray.getJSONObject(i).getJSONObject("author").get("name").toString()
                     author.profilePictureUrl = ""
                     author.slug = articlesJsonArray.getJSONObject(i).getJSONObject("author").get("slug").toString()
@@ -95,19 +110,16 @@ class HomeFragment : Fragment() {
             } catch (e: JSONException) {
                 e.printStackTrace()
             } finally {
+                println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
                 loading = true
+                homeFragmentSwipeContainer.isRefreshing = false
             }
         }, Response.ErrorListener { error ->
             error.printStackTrace()
             loading = true
+            println("sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
+            homeFragmentSwipeContainer.isRefreshing = false
         })
         Session.mRequestQueue!!.add(jsonRequest)
-    }
-
-    companion object {
-
-        fun newInstance(): HomeFragment {
-            return HomeFragment()
-        }
     }
 }

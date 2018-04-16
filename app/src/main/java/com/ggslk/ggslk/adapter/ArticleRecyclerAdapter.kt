@@ -33,9 +33,7 @@ class ArticleRecyclerAdapter(private val context: Context, private val articles:
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         holder.article = articles[position]
-        storageRef!!.child("team/" + articles[position].author!!.slug + ".jpg").downloadUrl.addOnSuccessListener { uri -> Picasso.get().load(uri.toString()).fit().centerCrop().into(holder.authorImageView) }.addOnFailureListener {
-            // Some error occurred
-        }
+        Picasso.get().load("file:///android_asset/team/${articles[position].author!!.id}.jpg").fit().centerCrop().into(holder.authorImageView)
         holder.authorName.text = articles[position].author!!.name
         holder.publishedDate.text = articles[position].publishedDate
         holder.title.text = Html.fromHtml(articles[position].title)
