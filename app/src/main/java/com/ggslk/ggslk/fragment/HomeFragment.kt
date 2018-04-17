@@ -12,6 +12,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.ggslk.ggslk.R
 import com.ggslk.ggslk.adapter.ArticleRecyclerAdapter
+import com.ggslk.ggslk.common.SaveHandler
 import com.ggslk.ggslk.common.Session
 import com.ggslk.ggslk.model.Article
 import com.ggslk.ggslk.model.Author
@@ -83,6 +84,13 @@ class HomeFragment : Fragment() {
         })
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        SaveHandler.save(context!!, "articles", Session.articles)
+        SaveHandler.save(context!!, "favorites", Session.favorites)
+    }
+
     private fun loadRecentPosts(count: Int, page: Int) {
         val jsonRequest = JsonObjectRequest(Request.Method.GET, "https://ggslk.com/api/get_recent_posts?count=$count&page=$page", null, Response.Listener { response ->
             try {
@@ -90,6 +98,7 @@ class HomeFragment : Fragment() {
 
                 for (i in 0 until articlesJsonArray.length()) {
                     val article = Article()
+                    article.id = articlesJsonArray.getJSONObject(i).get("id").toString()
                     article.title = articlesJsonArray.getJSONObject(i).get("title").toString()
                     article.content = articlesJsonArray.getJSONObject(i).get("content").toString()
                     article.publishedDate = articlesJsonArray.getJSONObject(i).get("date").toString().split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]
@@ -118,11 +127,11 @@ class HomeFragment : Fragment() {
         Session.mRequestQueue!!.add(jsonRequest)
     }
 
-    private fun endLoading(){
+    private fun endLoading() {
         try {
             loading = true
             homeFragmentSwipeContainer.isRefreshing = false
-        }catch (e: Exception){
+        } catch (e: Exception) {
             // Handle this
         }
     }

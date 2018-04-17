@@ -13,9 +13,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.ggslk.ggslk.R
 import com.ggslk.ggslk.activity.ArticleViewActivity
+import com.ggslk.ggslk.common.SaveHandler
+import com.ggslk.ggslk.common.Session
 import com.ggslk.ggslk.model.Article
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.like.LikeButton
+import com.like.OnLikeListener
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -39,6 +43,10 @@ class ArticleRecyclerAdapter(private val context: Context, private val articles:
         holder.title.text = Html.fromHtml(articles[position].title)
         holder.content.text = Html.fromHtml(articles[position].content)
         Picasso.get().load(articles[position].imageUrl).fit().centerCrop().into(holder.articleImageView)
+
+        if (Session.favorites.containsKey(articles[position].id!!.toInt())){
+            holder.articleFavButton.isLiked = true
+        }
     }
 
     override fun getItemCount(): Int {
@@ -55,6 +63,7 @@ class ArticleRecyclerAdapter(private val context: Context, private val articles:
         val title: TextView = itemView.findViewById(R.id.articleActivityTitleTextView)
         val content: TextView = itemView.findViewById(R.id.articleContentTextView)
         val articleImageView: ImageView = itemView.findViewById(R.id.articleImageView)
+        val articleFavButton: LikeButton = itemView.findViewById(R.id.articleActivityFavoriteButton)
 
         init {
             cardView.setOnClickListener {
@@ -62,6 +71,18 @@ class ArticleRecyclerAdapter(private val context: Context, private val articles:
                 intent.putExtra("article", article)
                 context.startActivity(intent)
             }
+
+            articleFavButton.setOnLikeListener(object : OnLikeListener {
+                override fun liked(likeButton: LikeButton) {
+                    Session.favorites[article!!.id!!.toInt()] = article!!
+                    SaveHandler.save(context, "favorites", Session.favorites)
+                }
+
+                override fun unLiked(likeButton: LikeButton) {
+                    Session.favorites.remove(article!!.id!!.toInt())
+                    SaveHandler.save(context, "favorites", Session.favorites)
+                }
+            })
         }
     }
 }

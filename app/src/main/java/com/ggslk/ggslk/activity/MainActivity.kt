@@ -17,10 +17,13 @@ import android.view.View
 import android.widget.Toast
 import com.android.volley.toolbox.Volley
 import com.ggslk.ggslk.R
+import com.ggslk.ggslk.common.SaveHandler
 import com.ggslk.ggslk.common.Session
 import com.ggslk.ggslk.fragment.CategoriesFragment
 import com.ggslk.ggslk.fragment.EventsFragment
 import com.ggslk.ggslk.fragment.HomeFragment
+import com.ggslk.ggslk.model.Article
+import com.ggslk.ggslk.model.Category
 import com.google.firebase.auth.FirebaseAuth
 import com.onesignal.OneSignal
 import kotlinx.android.synthetic.main.activity_main.*
@@ -150,6 +153,8 @@ class MainActivity : AppCompatActivity() {
         // Call syncHashedEmail anywhere in your app if you have the user's email.
         // This improves the effectiveness of OneSignal's "best-time" notification scheduling feature.
         // OneSignal.syncHashedEmail(userEmail);
+
+        loadCachedSessionData()
     }
 
     override fun onStart() {
@@ -167,6 +172,37 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity, "Authentication failed.",
                             Toast.LENGTH_SHORT).show()
                 }
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        SaveHandler.save(this@MainActivity, "categories", Session.categories)
+        SaveHandler.save(this@MainActivity, "articles", Session.articles)
+        SaveHandler.save(this@MainActivity, "favorites", Session.favorites)
+    }
+
+    private fun loadCachedSessionData(){
+        if (SaveHandler.saveExists(this@MainActivity, "categories")){
+            var categories = SaveHandler.load(this@MainActivity, "categories") as ArrayList<Category>
+            for (category in categories){
+                Session.categories.add(category)
+            }
+        }
+
+        if (SaveHandler.saveExists(this@MainActivity, "articles")){
+            var articles = SaveHandler.load(this@MainActivity, "articles") as ArrayList<Article>
+            for (article in articles){
+                Session.articles.add(article)
+            }
+        }
+
+        if (SaveHandler.saveExists(this@MainActivity, "favorites")){
+            var favorites = SaveHandler.load(this@MainActivity, "favorites") as HashMap<Int, Article>
+            for (entry in favorites.entries){
+                Session.favorites.put(entry.key, entry.value)
             }
         }
     }

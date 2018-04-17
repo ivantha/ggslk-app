@@ -13,6 +13,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.ggslk.ggslk.R
 import com.ggslk.ggslk.adapter.CategoryRecyclerAdapter
+import com.ggslk.ggslk.common.SaveHandler
 import com.ggslk.ggslk.common.Session
 import com.ggslk.ggslk.model.Article
 import com.ggslk.ggslk.model.Author
@@ -21,6 +22,13 @@ import org.json.JSONException
 
 
 class CategoriesFragment : Fragment() {
+
+    companion object {
+        fun newInstance(): CategoriesFragment {
+            return CategoriesFragment()
+        }
+    }
+
     private var gridLayoutManager: GridLayoutManager? = null
     private var recyclerView: RecyclerView? = null
     private var categoryRecyclerAdapter: CategoryRecyclerAdapter? = null
@@ -76,11 +84,10 @@ class CategoriesFragment : Fragment() {
         return view
     }
 
-    companion object {
+    override fun onDestroy() {
+        super.onDestroy()
 
-        fun newInstance(): CategoriesFragment {
-            return CategoriesFragment()
-        }
+        SaveHandler.save(context!!, "categories", Session.categories)
     }
 
 }
