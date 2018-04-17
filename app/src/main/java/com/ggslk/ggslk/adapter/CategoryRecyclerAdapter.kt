@@ -16,6 +16,8 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.ggslk.ggslk.R
 import com.ggslk.ggslk.common.Session
 import com.ggslk.ggslk.fragment.CategoryArticlesFragment
+import com.ggslk.ggslk.model.Article
+import com.ggslk.ggslk.model.Author
 import com.ggslk.ggslk.model.Category
 import com.squareup.picasso.Picasso
 import org.json.JSONException
@@ -29,9 +31,11 @@ class CategoryRecyclerAdapter(private val context: Context, private val categori
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         holder.category = categories[position]
-        holder.categoryArticleName.text = categories[position].featuredArticle!!.title
-        holder.categoryArticleAuthor.text = categories[position].featuredArticle!!.author!!.name
         holder.categoryTitle.text = categories[position].title
+        if(categories[position].featuredArticle != null){
+            holder.categoryArticleName.text = categories[position].featuredArticle!!.title
+            holder.categoryArticleAuthor.text = categories[position].featuredArticle!!.author!!.name
+        }
     }
 
     override fun getItemCount(): Int {
@@ -43,18 +47,21 @@ class CategoryRecyclerAdapter(private val context: Context, private val categori
 
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, "https://ggslk.com/api/get_category_posts?slug=" + categories[position].slug + "&count=1", null, Response.Listener { response ->
             try {
-                val posts = response.getJSONArray("posts")
-                val title = posts.getJSONObject(0).get("title").toString()
-                val author = posts.getJSONObject(0).getJSONObject("author").get("name").toString()
-                val imageUrl = posts.getJSONObject(0).getJSONObject("thumbnail_images").getJSONObject("full").get("url").toString()
+                val firstPost = response.getJSONArray("posts").getJSONObject(0)
 
-                categories[position].featuredArticle!!.title = title
-                categories[position].featuredArticle!!.author!!.name = author
-                categories[position].featuredArticle!!.imageUrl = imageUrl
+                var author = Author()
+                author.name = firstPost.getJSONObject("author").get("name").toString()
 
-                Picasso.get().load(imageUrl).fit().centerCrop().into(holder.categoryArticleImageView)
-                holder.categoryArticleName.text = title
-                holder.categoryArticleAuthor.text = author
+                var article = Article()
+                article.title = firstPost.get("title").toString()
+                article.imageUrl = firstPost.getJSONObject("thumbnail_images").getJSONObject("full").get("url").toString()
+                article.author = author
+
+                categories[position].featuredArticle = article
+
+                Picasso.get().load(article.imageUrl).fit().centerCrop().into(holder.categoryArticleImageView)
+                holder.categoryArticleName.text = article.title
+                holder.categoryArticleAuthor.text = author.name
 
             } catch (e: JSONException) {
                 e.printStackTrace()

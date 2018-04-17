@@ -8,4 +8,10 @@ class Category : Serializable {
     var title: String? = null
     var featuredArticle: Article? = null
     var articles: ArrayList<Article> = ArrayList()
+
+    constructor(id: String?, slug: String?, title: String?) {
+        this.id = id
+        this.slug = slug
+        this.title = title
+    }
 }
