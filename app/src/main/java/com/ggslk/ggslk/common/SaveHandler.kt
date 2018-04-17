@@ -1,7 +1,6 @@
 package com.ggslk.ggslk.common
 
 import android.content.Context
-import java.io.FileNotFoundException
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 
@@ -15,7 +14,7 @@ object SaveHandler {
         val obj = objectInputStream.readObject()
 
         objectInputStream.close()
-        fileInputStream!!.close()
+        fileInputStream.close()
 
         return obj
     }
@@ -34,9 +33,13 @@ object SaveHandler {
     @JvmStatic
     fun saveExists(context: Context, name: String): Boolean {
         return try {
-            context.openFileInput(name).close()         // Open and close the resource. FileNotFoundException is found if resource is not found
-            true
-        } catch (e: FileNotFoundException) {
+            var fileOutputStream = context.openFileInput(name)
+            var ret = fileOutputStream != null
+
+            fileOutputStream.close()
+
+            ret
+        } catch (e: Exception) {
             e.printStackTrace()
             false
         }

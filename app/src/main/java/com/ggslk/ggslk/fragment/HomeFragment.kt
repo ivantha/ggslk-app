@@ -69,18 +69,16 @@ class HomeFragment : Fragment() {
         })
 
         homeFragmentSwipeContainer.setOnRefreshListener({
-            Session.articles.clear()
             pageNo = 1
-            loadRecentPosts(10, pageNo++)
+            loadRecentPosts(10, pageNo++, clear = true)
         })
 
         // Trigger auto refresh on the first time
         homeFragmentSwipeContainer!!.post({
             homeFragmentSwipeContainer!!.isRefreshing = true
 
-            Session.articles.clear()
             pageNo = 1
-            loadRecentPosts(10, pageNo++)
+            loadRecentPosts(10, pageNo++, clear = true)
         })
     }
 
@@ -91,10 +89,14 @@ class HomeFragment : Fragment() {
         SaveHandler.save(context!!, "favorites", Session.favorites)
     }
 
-    private fun loadRecentPosts(count: Int, page: Int) {
+    private fun loadRecentPosts(count: Int, page: Int, clear: Boolean = false) {
         val jsonRequest = JsonObjectRequest(Request.Method.GET, "https://ggslk.com/api/get_recent_posts?count=$count&page=$page", null, Response.Listener { response ->
             try {
                 val articlesJsonArray = response.getJSONArray("posts")
+
+                if(clear){
+                    Session.articles.clear()
+                }
 
                 for (i in 0 until articlesJsonArray.length()) {
                     val article = Article()
