@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +17,7 @@ import com.ggslk.ggslk.common.Session
 import com.ggslk.ggslk.model.Article
 import com.ggslk.ggslk.model.Author
 import com.ggslk.ggslk.model.Category
+import kotlinx.android.synthetic.main.fragment_categories.*
 import org.json.JSONException
 
 
@@ -29,28 +29,47 @@ class CategoriesFragment : Fragment() {
         }
     }
 
-    private var gridLayoutManager: GridLayoutManager? = null
-    private var recyclerView: RecyclerView? = null
     private var categoryRecyclerAdapter: CategoryRecyclerAdapter? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // Initialize GridLayoutManager
-        gridLayoutManager = GridLayoutManager(context, 2, LinearLayoutManager.VERTICAL, false)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_categories, container, false)
+        return inflater.inflate(R.layout.fragment_categories, container, false)
+    }
 
-        recyclerView = view.findViewById(R.id.categoryRecyclerView)
-        recyclerView!!.layoutManager = gridLayoutManager
-        recyclerView!!.setHasFixedSize(true)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        var gridLayoutManager = GridLayoutManager(context, 2, LinearLayoutManager.VERTICAL, false)
+        categoryRecyclerView.layoutManager = gridLayoutManager
+        categoryRecyclerView.setHasFixedSize(true)
+
+        categoryRecyclerAdapter = CategoryRecyclerAdapter(context!!, Session.categories)
+        categoryRecyclerView.adapter = categoryRecyclerAdapter
+
+        categoriesFragmentSwipeContainer.setOnRefreshListener({
+            refreshCategories()
+        })
+
+        // Trigger auto refresh on the first time
+        categoriesFragmentSwipeContainer!!.post({
+            categoriesFragmentSwipeContainer!!.isRefreshing = true
+
+            refreshCategories()
+        })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        SaveHandler.save(context!!, "categories", Session.categories)
+    }
+
+    private fun refreshCategories(){
         val jsonRequest = JsonObjectRequest(Request.Method.GET, "https://ggslk.com/api/get_category_index", null, Response.Listener { response ->
             try {
                 val categoriesJsonArray = response.getJSONArray("categories")
+
+                Session.categories.clear()
 
                 for (i in 0 until categoriesJsonArray.length()) {
                     val category = Category()
@@ -74,20 +93,22 @@ class CategoriesFragment : Fragment() {
 
             } catch (e: JSONException) {
                 e.printStackTrace()
+            }finally {
+                endLoading()
             }
-        }, Response.ErrorListener { error -> error.printStackTrace() })
+        }, Response.ErrorListener {
+            error -> error.printStackTrace()
+            endLoading()
+        })
         Session.mRequestQueue!!.add(jsonRequest)
-
-        categoryRecyclerAdapter = CategoryRecyclerAdapter(context!!, Session.categories)
-        recyclerView!!.adapter = categoryRecyclerAdapter
-
-        return view
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-
-        SaveHandler.save(context!!, "categories", Session.categories)
+    private fun endLoading() {
+        try {
+            categoriesFragmentSwipeContainer.isRefreshing = false
+        } catch (e: Exception) {
+            // Handle this
+        }
     }
 
 }
