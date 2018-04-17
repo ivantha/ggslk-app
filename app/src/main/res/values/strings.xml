@@ -19,10 +19,13 @@
 
     <!--Tabs-->
     <string name="title_events">Events</string>
-    <string name="title_home">Home</string>
+    <string name="title_news_feed">News Feed</string>
     <string name="title_categories">Categories</string>
 
     <!--Articles-->
     <string name="text_article_name_default">Article name</string>
     <string name="text_article_author_default">Author</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

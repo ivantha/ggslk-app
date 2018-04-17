@@ -3,7 +3,6 @@ package com.ggslk.ggslk.activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
@@ -19,15 +18,13 @@ import com.android.volley.toolbox.Volley
 import com.ggslk.ggslk.R
 import com.ggslk.ggslk.common.SaveHandler
 import com.ggslk.ggslk.common.Session
-import com.ggslk.ggslk.fragment.CategoriesFragment
-import com.ggslk.ggslk.fragment.EventsFragment
+import com.ggslk.ggslk.fragment.FavoritesFragment
 import com.ggslk.ggslk.fragment.HomeFragment
 import com.ggslk.ggslk.model.Article
 import com.ggslk.ggslk.model.Category
 import com.google.firebase.auth.FirebaseAuth
 import com.onesignal.OneSignal
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -60,17 +57,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onNavigationItemSelected(item: MenuItem): Boolean {
-            // Handle navigation view item clicks here.
-            val id = item.itemId
-
-            when (id) {
+            val manager = supportFragmentManager
+            val transaction = manager.beginTransaction()
+            val fragment: Fragment
+            when (item.itemId) {
                 R.id.nav_home -> {
-                    val intent = Intent(this@MainActivity, MainActivity::class.java)
-                    this@MainActivity.startActivity(intent)
+                    fragment = HomeFragment.newInstance()
+                    transaction.replace(R.id.fragmentContainer, fragment)
+                    transaction.commit()
                 }
                 R.id.nav_favorites -> {
-                    val intent = Intent(this@MainActivity, FavoritesActivity::class.java)
-                    this@MainActivity.startActivity(intent)
+                    fragment = FavoritesFragment.newInstance()
+                    transaction.replace(R.id.fragmentContainer, fragment)
+                    transaction.commit()
                 }
                 R.id.nav_blog -> {
                     val openURL = Intent(android.content.Intent.ACTION_VIEW)
@@ -96,34 +95,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        val manager = supportFragmentManager
-        val transaction = manager.beginTransaction()
-        val fragment: Fragment
-
-        when (item.itemId) {
-            R.id.navigation_events -> {
-                fragment = EventsFragment.newInstance()
-                transaction.replace(R.id.container, fragment)
-                transaction.commit()
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_home -> {
-                fragment = HomeFragment.newInstance()
-                transaction.replace(R.id.container, fragment)
-                transaction.commit()
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_categories -> {
-                fragment = CategoriesFragment.newInstance()
-                transaction.replace(R.id.container, fragment)
-                transaction.commit()
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -137,9 +108,6 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(onDrawerNavigationItemSelectedListener)
-
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        navigation.selectedItemId = R.id.navigation_home
 
         // RequestQueue initialized
         Session.mRequestQueue = Volley.newRequestQueue(this@MainActivity)

@@ -33,12 +33,15 @@ object SaveHandler {
     @JvmStatic
     fun saveExists(context: Context, name: String): Boolean {
         return try {
-            var fileOutputStream = context.openFileInput(name)
-            var ret = fileOutputStream != null
+            val fileInputStream = context.openFileInput(name)
+            val objectInputStream = ObjectInputStream(fileInputStream)
 
-            fileOutputStream.close()
+            val obj = objectInputStream.readObject()
 
-            ret
+            objectInputStream.close()
+            fileInputStream.close()
+
+            return obj != null
         } catch (e: Exception) {
             e.printStackTrace()
             false
