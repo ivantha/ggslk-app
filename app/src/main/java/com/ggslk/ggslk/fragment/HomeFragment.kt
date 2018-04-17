@@ -18,8 +18,7 @@ class HomeFragment : Fragment() {
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        val manager = fragmentManager
-        val transaction = manager!!.beginTransaction()
+        val transaction = fragmentManager!!.beginTransaction()
         val fragment: Fragment
 
         when (item.itemId) {

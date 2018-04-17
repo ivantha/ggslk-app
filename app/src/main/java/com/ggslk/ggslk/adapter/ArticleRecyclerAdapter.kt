@@ -16,23 +16,16 @@ import com.ggslk.ggslk.activity.ArticleViewActivity
 import com.ggslk.ggslk.common.SaveHandler
 import com.ggslk.ggslk.common.Session
 import com.ggslk.ggslk.model.Article
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.like.LikeButton
 import com.like.OnLikeListener
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
 class ArticleRecyclerAdapter(private val context: Context, private val articles: List<Article>) : Adapter<ArticleRecyclerAdapter.ArticleViewHolder>() {
-    private var storageRef: StorageReference? = null        // Firebase Storage
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_article, parent, false)
-        val articleViewHolder = ArticleViewHolder(v)
-
-        storageRef = FirebaseStorage.getInstance().reference
-
-        return articleViewHolder
+        return ArticleViewHolder(v)
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {

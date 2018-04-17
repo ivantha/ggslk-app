@@ -1,7 +1,5 @@
 package com.ggslk.ggslk.activity
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
@@ -45,10 +43,12 @@ class MainActivity : AppCompatActivity() {
             return true
         }
 
+        /**
+         * Handle action bar item clicks here.
+         * The action bar will automatically handle clicks on the Home/Up button,
+         * so long as you specify a parent activity in AndroidManifest.xml.
+         */
         fun onOptionsItemSelected(item: MenuItem): Boolean {
-            // Handle action bar item clicks here. The action bar will
-            // automatically handle clicks on the Home/Up button, so long
-            // as you specify a parent activity in AndroidManifest.xml.
             val id = item.itemId
 
             return if (id == R.id.action_settings) {
@@ -57,29 +57,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onNavigationItemSelected(item: MenuItem): Boolean {
-            val manager = supportFragmentManager
-            val transaction = manager.beginTransaction()
+            val transaction = supportFragmentManager.beginTransaction()
             val fragment: Fragment
             when (item.itemId) {
                 R.id.nav_home -> {
                     fragment = HomeFragment.newInstance()
                     transaction.replace(R.id.fragmentContainer, fragment)
-                    transaction.commit()
                 }
                 R.id.nav_favorites -> {
                     fragment = FavoritesFragment.newInstance()
                     transaction.replace(R.id.fragmentContainer, fragment)
-                    transaction.commit()
-                }
-                R.id.nav_blog -> {
-                    val openURL = Intent(android.content.Intent.ACTION_VIEW)
-                    openURL.data = Uri.parse("https://ggslk.com/")
-                    startActivity(openURL)
-                }
-                R.id.nav_facebook -> {
-                    val openURL = Intent(android.content.Intent.ACTION_VIEW)
-                    openURL.data = Uri.parse("https://www.facebook.com/GGSLK.SriLanka/?ref=br_rs")
-                    startActivity(openURL)
                 }
                 R.id.nav_profile -> {
 
@@ -88,6 +75,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
             }
+            transaction.commit()
 
             val drawer = findViewById<View>(R.id.drawerLayout) as DrawerLayout
             drawer.closeDrawer(GravityCompat.START)
@@ -123,6 +111,12 @@ class MainActivity : AppCompatActivity() {
         // OneSignal.syncHashedEmail(userEmail);
 
         loadCachedSessionData()
+
+        // Load HomeFragment
+        val transaction = supportFragmentManager.beginTransaction()
+        val fragment = HomeFragment.newInstance()
+        transaction.replace(R.id.fragmentContainer, fragment)
+        transaction.commit()
     }
 
     override fun onStart() {

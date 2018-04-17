@@ -43,7 +43,7 @@ class CategoriesFragment : Fragment() {
         categoryRecyclerView.layoutManager = gridLayoutManager
         categoryRecyclerView.setHasFixedSize(true)
 
-        categoryRecyclerAdapter = CategoryRecyclerAdapter(context!!, Session.categories)
+        categoryRecyclerAdapter = CategoryRecyclerAdapter(context!!, Session.categories, fragmentManager!!)
         categoryRecyclerView.adapter = categoryRecyclerAdapter
 
         categoriesFragmentSwipeContainer.setOnRefreshListener({
