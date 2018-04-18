@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val transaction = supportFragmentManager.beginTransaction()
         val fragment: Fragment
-        return when(item.itemId){
+        return when (item.itemId) {
             R.id.action_report -> {
                 fragment = ReportFragment.newInstance()
                 transaction.replace(R.id.fragmentContainer, fragment)
@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navView.setNavigationItemSelectedListener(this)
 
         // Obtain the FirebaseAnalytics instance.
-        Session.mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Session.mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         // RequestQueue initialized
         Session.mRequestQueue = Volley.newRequestQueue(this@MainActivity)

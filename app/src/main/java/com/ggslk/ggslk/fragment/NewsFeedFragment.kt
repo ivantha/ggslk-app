@@ -24,7 +24,7 @@ class NewsFeedFragment : Fragment() {
 
     private var articleRecyclerAdapter: ArticleRecyclerAdapter? = null
     private var loading = true
-    private var pageNo = 1
+    private var pageNo: Int = 1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -40,6 +40,9 @@ class NewsFeedFragment : Fragment() {
 
         articleRecyclerAdapter = ArticleRecyclerAdapter(context!!, Session.articles)
         articleRecyclerView.adapter = articleRecyclerAdapter
+
+        // Set the page number to loaded recent count
+        pageNo = (Session.articles.size / 10) + 1
 
         articleRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {

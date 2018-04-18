@@ -98,7 +98,7 @@ class CategoryArticlesFragment : Fragment() {
     }
 
     private fun loadRecentPosts(count: Int, page: Int, clear: Boolean = false) {
-        val jsonRequest = JsonObjectRequest(Request.Method.GET, "https://ggslk.com/api/get_recent_posts?count=$count&page=$page", null, Response.Listener { response ->
+        val jsonRequest = JsonObjectRequest(Request.Method.GET, "https://ggslk.com/api/get_category_posts?slug=$categorySlug&count=$count&page=$page", null, Response.Listener { response ->
             try {
                 val articlesJsonArray = response.getJSONArray("posts")
 
