@@ -37,7 +37,7 @@ class ArticleRecyclerAdapter(private val context: Context, private val articles:
         holder.content.text = Html.fromHtml(articles[position].content)
         Picasso.get().load(articles[position].imageUrl).fit().centerCrop().into(holder.articleImageView)
 
-        if (Session.favorites.containsKey(articles[position].id!!.toInt())){
+        if (Session.favorites.containsKey(articles[position].id!!.toInt())) {
             holder.articleFavButton.isLiked = true
         }
     }

@@ -32,7 +32,7 @@ class CategoryRecyclerAdapter(private val context: Context, private val categori
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         holder.category = categories[position]
         holder.categoryTitle.text = categories[position].title
-        if(categories[position].featuredArticle != null){
+        if (categories[position].featuredArticle != null) {
             holder.categoryArticleName.text = categories[position].featuredArticle!!.title
             holder.categoryArticleAuthor.text = categories[position].featuredArticle!!.author!!.name
         }
@@ -71,6 +71,8 @@ class CategoryRecyclerAdapter(private val context: Context, private val categori
         jsonObjectRequest.retryPolicy = DefaultRetryPolicy(500000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+
+        jsonObjectRequest.tag = "cat"
 
         Session.mRequestQueue!!.add(jsonObjectRequest)
     }

@@ -13,6 +13,8 @@ object Session {
 
     var mRequestQueue: RequestQueue? = null
 
+    var newsFeedFragmentFirstOpen: Boolean = true
+
     init {
         // Add categories
         categories.add(Category("195", "accessories", "Accessories"))

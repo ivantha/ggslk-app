@@ -102,7 +102,7 @@
                 app:icon_size="25dp"
                 app:icon_type="thumb"
                 app:liked="false"
-                app:is_enabled="false"
+                app:is_enabled="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

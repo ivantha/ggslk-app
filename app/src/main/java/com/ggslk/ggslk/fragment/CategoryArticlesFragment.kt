@@ -80,6 +80,8 @@ class CategoryArticlesFragment : Fragment() {
             }
         })
 
+        Session.mRequestQueue!!.cancelAll("cat")
+
         categoryArticlesFragmentSwipeContainer.setOnRefreshListener({
             pageNo = 1
             loadRecentPosts(10, pageNo++, clear = true)
@@ -131,6 +133,9 @@ class CategoryArticlesFragment : Fragment() {
             error.printStackTrace()
             endLoading()
         })
+
+        jsonRequest.tag = "cat"
+
         Session.mRequestQueue!!.add(jsonRequest)
     }
 

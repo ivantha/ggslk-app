@@ -1,6 +1,7 @@
 <resources>
     <!--App level-->
     <string name="app_name">GGSLK Sri Lanka</string>
+    <string name="app_brand">GGSLK</string>
 
     <!--Navigation-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -23,4 +24,7 @@
     <!--Articles-->
     <string name="text_article_name_default">Article name</string>
     <string name="text_article_author_default">Author</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

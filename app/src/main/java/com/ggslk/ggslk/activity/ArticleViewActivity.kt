@@ -1,14 +1,13 @@
 package com.ggslk.ggslk.activity
 
 import android.os.Bundle
-import android.support.v4.app.NavUtils
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.view.MenuItem
 import com.ggslk.ggslk.R
 import com.ggslk.ggslk.model.Article
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_article_view.*
+
 
 class ArticleViewActivity : AppCompatActivity() {
 
@@ -30,17 +29,5 @@ class ArticleViewActivity : AppCompatActivity() {
         articleActivityAuthorNameTextView.text = article.author!!.name
         Picasso.get().load("file:///android_asset/team/${article.author!!.id}.jpg").fit().centerCrop().into(articleActivityAuthorImageView)
         articleActivityArticleDateTextView.text = article.publishedDate
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                NavUtils.navigateUpFromSameTask(this)
-                true
-            }
-            else -> {
-                super.onOptionsItemSelected(item)
-            }
-        }
     }
 }

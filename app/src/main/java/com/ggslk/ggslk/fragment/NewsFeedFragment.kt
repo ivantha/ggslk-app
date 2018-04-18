@@ -22,12 +22,6 @@ import org.json.JSONException
 
 class NewsFeedFragment : Fragment() {
 
-    companion object {
-        fun newInstance(): NewsFeedFragment {
-            return NewsFeedFragment()
-        }
-    }
-
     private var articleRecyclerAdapter: ArticleRecyclerAdapter? = null
     private var loading = true
     private var pageNo = 1
@@ -66,6 +60,8 @@ class NewsFeedFragment : Fragment() {
             }
         })
 
+        Session.mRequestQueue!!.cancelAll("cat")
+
         homeFragmentSwipeContainer.setOnRefreshListener({
             pageNo = 1
             loadRecentPosts(10, pageNo++, clear = true)
@@ -73,10 +69,14 @@ class NewsFeedFragment : Fragment() {
 
         // Trigger auto refresh on the first time
         homeFragmentSwipeContainer!!.post({
-            homeFragmentSwipeContainer!!.isRefreshing = true
+            if (Session.newsFeedFragmentFirstOpen) {
+                homeFragmentSwipeContainer!!.isRefreshing = true
 
-            pageNo = 1
-            loadRecentPosts(10, pageNo++, clear = true)
+                pageNo = 1
+                loadRecentPosts(10, pageNo++, clear = true)
+
+                Session.newsFeedFragmentFirstOpen = false
+            }
         })
     }
 
@@ -92,7 +92,7 @@ class NewsFeedFragment : Fragment() {
             try {
                 val articlesJsonArray = response.getJSONArray("posts")
 
-                if(clear){
+                if (clear) {
                     Session.articles.clear()
                 }
 
@@ -133,6 +133,12 @@ class NewsFeedFragment : Fragment() {
             homeFragmentSwipeContainer.isRefreshing = false
         } catch (e: Exception) {
             // Handle this
+        }
+    }
+
+    companion object {
+        fun newInstance(): NewsFeedFragment {
+            return NewsFeedFragment()
         }
     }
 }

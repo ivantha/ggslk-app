@@ -146,24 +146,27 @@ class MainActivity : AppCompatActivity() {
         SaveHandler.save(this@MainActivity, "favorites", Session.favorites)
     }
 
-    private fun loadCachedSessionData(){
-        if (SaveHandler.saveExists(this@MainActivity, "categories")){
+    private fun loadCachedSessionData() {
+        if (SaveHandler.saveExists(this@MainActivity, "categories")) {
             var categories = SaveHandler.load(this@MainActivity, "categories") as ArrayList<Category>
-            for (category in categories){
+            Session.categories.clear()
+            for (category in categories) {
                 Session.categories.add(category)
             }
         }
 
-        if (SaveHandler.saveExists(this@MainActivity, "articles")){
+        if (SaveHandler.saveExists(this@MainActivity, "articles")) {
             var articles = SaveHandler.load(this@MainActivity, "articles") as ArrayList<Article>
-            for (article in articles){
+            Session.articles.clear()
+            for (article in articles) {
                 Session.articles.add(article)
             }
         }
 
-        if (SaveHandler.saveExists(this@MainActivity, "favorites")){
+        if (SaveHandler.saveExists(this@MainActivity, "favorites")) {
             var favorites = SaveHandler.load(this@MainActivity, "favorites") as HashMap<Int, Article>
-            for (entry in favorites.entries){
+            Session.favorites.clear()
+            for (entry in favorites.entries) {
                 Session.favorites.put(entry.key, entry.value)
             }
         }

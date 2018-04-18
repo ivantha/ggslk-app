@@ -16,12 +16,6 @@ import kotlinx.android.synthetic.main.fragment_categories.*
 
 class CategoriesFragment : Fragment() {
 
-    companion object {
-        fun newInstance(): CategoriesFragment {
-            return CategoriesFragment()
-        }
-    }
-
     private var categoryRecyclerAdapter: CategoryRecyclerAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -38,12 +32,20 @@ class CategoriesFragment : Fragment() {
 
         categoryRecyclerAdapter = CategoryRecyclerAdapter(context!!, Session.categories, fragmentManager!!)
         categoryRecyclerView.adapter = categoryRecyclerAdapter
+
+        Session.mRequestQueue!!.cancelAll("cat")
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
         SaveHandler.save(context!!, "categories", Session.categories)
+    }
+
+    companion object {
+        fun newInstance(): CategoriesFragment {
+            return CategoriesFragment()
+        }
     }
 
 }
