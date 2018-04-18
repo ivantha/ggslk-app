@@ -16,6 +16,10 @@
     <string name="navigation_profile">Profile</string>
     <string name="navigation_settings">Settings</string>
 
+    <!--App bar-->
+    <string name="action_report">Report</string>
+    <string name="action_contact_us">Contact Us</string>
+
     <!--Tabs-->
     <string name="title_events">Events</string>
     <string name="title_news_feed">News Feed</string>

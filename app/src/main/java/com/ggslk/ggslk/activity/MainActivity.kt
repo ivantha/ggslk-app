@@ -16,71 +16,86 @@ import com.android.volley.toolbox.Volley
 import com.ggslk.ggslk.R
 import com.ggslk.ggslk.common.SaveHandler
 import com.ggslk.ggslk.common.Session
+import com.ggslk.ggslk.fragment.ContactUsFragment
 import com.ggslk.ggslk.fragment.FavoritesFragment
 import com.ggslk.ggslk.fragment.HomeFragment
+import com.ggslk.ggslk.fragment.ReportFragment
 import com.ggslk.ggslk.model.Article
 import com.ggslk.ggslk.model.Category
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.onesignal.OneSignal
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private val onDrawerNavigationItemSelectedListener = object : NavigationView.OnNavigationItemSelectedListener {
-        fun onBackPressed() {
-            val drawer = findViewById<View>(R.id.drawerLayout) as DrawerLayout
-            if (drawer.isDrawerOpen(GravityCompat.START)) {
-                drawer.closeDrawer(GravityCompat.START)
-            } else {
-                onBackPressed()
-            }
-        }
-
-        fun onCreateOptionsMenu(menu: Menu): Boolean {
-            // Inflate the menu; this adds items to the action bar if it is present.
-            menuInflater.inflate(R.menu.main, menu)
-            return true
-        }
-
-        /**
-         * Handle action bar item clicks here.
-         * The action bar will automatically handle clicks on the Home/Up button,
-         * so long as you specify a parent activity in AndroidManifest.xml.
-         */
-        fun onOptionsItemSelected(item: MenuItem): Boolean {
-            val id = item.itemId
-
-            return if (id == R.id.action_settings) {
-                true
-            } else onOptionsItemSelected(item)
-        }
-
-        override fun onNavigationItemSelected(item: MenuItem): Boolean {
-            val transaction = supportFragmentManager.beginTransaction()
-            val fragment: Fragment
-            when (item.itemId) {
-                R.id.nav_home -> {
-                    fragment = HomeFragment.newInstance()
-                    transaction.replace(R.id.fragmentContainer, fragment)
-                }
-                R.id.nav_favorites -> {
-                    fragment = FavoritesFragment.newInstance()
-                    transaction.replace(R.id.fragmentContainer, fragment)
-                }
-                R.id.nav_profile -> {
-
-                }
-                R.id.nav_settings -> {
-
-                }
-            }
-            transaction.commit()
-
-            val drawer = findViewById<View>(R.id.drawerLayout) as DrawerLayout
+    override fun onBackPressed() {
+        val drawer = findViewById<View>(R.id.drawerLayout) as DrawerLayout
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
-            return true
+        } else {
+            onBackPressed()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.app_bar_main_menu, menu)
+        return true
+    }
+
+    /**
+     * Handle action bar item clicks here.
+     * The action bar will automatically handle clicks on the Home/Up button,
+     * so long as you specify a parent activity in AndroidManifest.xml.
+     */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val transaction = supportFragmentManager.beginTransaction()
+        val fragment: Fragment
+        return when(item.itemId){
+            R.id.action_report -> {
+                fragment = ReportFragment.newInstance()
+                transaction.replace(R.id.fragmentContainer, fragment)
+                transaction.commit()
+                true
+            }
+            R.id.action_contact_us -> {
+                fragment = ContactUsFragment.newInstance()
+                transaction.replace(R.id.fragmentContainer, fragment)
+                transaction.commit()
+                true
+            }
+            else -> {
+                onOptionsItemSelected(item)
+            }
+        }
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        val transaction = supportFragmentManager.beginTransaction()
+        val fragment: Fragment
+        when (item.itemId) {
+            R.id.nav_home -> {
+                fragment = HomeFragment.newInstance()
+                transaction.replace(R.id.fragmentContainer, fragment)
+            }
+            R.id.nav_favorites -> {
+                fragment = FavoritesFragment.newInstance()
+                transaction.replace(R.id.fragmentContainer, fragment)
+            }
+            R.id.nav_profile -> {
+
+            }
+            R.id.nav_settings -> {
+
+            }
+        }
+        transaction.commit()
+
+        val drawer = findViewById<View>(R.id.drawerLayout) as DrawerLayout
+        drawer.closeDrawer(GravityCompat.START)
+        return true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,7 +110,10 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        navView.setNavigationItemSelectedListener(onDrawerNavigationItemSelectedListener)
+        navView.setNavigationItemSelectedListener(this)
+
+        // Obtain the FirebaseAnalytics instance.
+        Session.mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         // RequestQueue initialized
         Session.mRequestQueue = Volley.newRequestQueue(this@MainActivity)

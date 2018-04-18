@@ -73,6 +73,7 @@ class CategoryArticlesFragment : Fragment() {
                     if (loading) {
                         if (visibleItemCount + pastVisibleItems >= totalItemCount) {
                             loading = false
+                            categoryArticlesFragmentSwipeContainer.isRefreshing = true
                             loadRecentPosts(10, pageNo++)
                         }
                     }

@@ -4,8 +4,13 @@ import android.graphics.Color
 import com.android.volley.RequestQueue
 import com.ggslk.ggslk.model.Article
 import com.ggslk.ggslk.model.Category
+import com.google.firebase.analytics.FirebaseAnalytics
+
+
 
 object Session {
+    var mFirebaseAnalytics: FirebaseAnalytics? = null
+
     val categories = ArrayList<Category>()
     val articles = ArrayList<Article>()
     val favorites = HashMap<Int, Article>()
