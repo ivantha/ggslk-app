@@ -1,19 +1,22 @@
 package com.ggslk.ggslk.common
 
+import android.graphics.Color
 import com.android.volley.RequestQueue
 import com.ggslk.ggslk.model.Article
 import com.ggslk.ggslk.model.Category
-import java.util.*
-import kotlin.collections.HashMap
 
 object Session {
     val categories = ArrayList<Category>()
     val articles = ArrayList<Article>()
     val favorites = HashMap<Int, Article>()
+    val liked = HashMap<Int, Article>()
 
     var mRequestQueue: RequestQueue? = null
 
     var newsFeedFragmentFirstOpen: Boolean = true
+    var categoriesFragmentFirstOpen: Boolean = true
+
+    val categoryColors: ArrayList<Int> = ArrayList()
 
     init {
         // Add categories
@@ -29,7 +32,7 @@ object Session {
         categories.add(Category("197", "dev_tools", "Development Tools"))
         categories.add(Category("2", "devices", "Devices"))
         categories.add(Category("212", "english", "English"))
-        categories.add(Category("210", "events", "Events"))
+//        categories.add(Category("210", "events", "Events"))
         categories.add(Category("154", "featured", "Featured"))
         categories.add(Category("209", "gmail", "Gmail"))
         categories.add(Category("2112", "google", "Google"))
@@ -56,5 +59,15 @@ object Session {
         categories.add(Category("190", "vr", "Virtual Reality"))
         categories.add(Category("194", "watches", "Watches"))
         categories.add(Category("196", "web_based_products", "Web Based Products"))
+
+        // Add category colors
+        categoryColors.add(Color.parseColor("#e53935"))
+        categoryColors.add(Color.parseColor("#1E88E5"))
+        categoryColors.add(Color.parseColor("#43A047"))
+        categoryColors.add(Color.parseColor("#546E7A"))
+        categoryColors.add(Color.parseColor("#8E24AA"))
+        categoryColors.add(Color.parseColor("#00ACC1"))
+        categoryColors.add(Color.parseColor("#F4511E"))
+        categoryColors.add(Color.parseColor("#3949AB"))
     }
 }

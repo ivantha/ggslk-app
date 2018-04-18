@@ -144,6 +144,7 @@ class MainActivity : AppCompatActivity() {
         SaveHandler.save(this@MainActivity, "categories", Session.categories)
         SaveHandler.save(this@MainActivity, "articles", Session.articles)
         SaveHandler.save(this@MainActivity, "favorites", Session.favorites)
+        SaveHandler.save(this@MainActivity, "liked", Session.liked)
     }
 
     private fun loadCachedSessionData() {
@@ -167,7 +168,15 @@ class MainActivity : AppCompatActivity() {
             var favorites = SaveHandler.load(this@MainActivity, "favorites") as HashMap<Int, Article>
             Session.favorites.clear()
             for (entry in favorites.entries) {
-                Session.favorites.put(entry.key, entry.value)
+                Session.favorites[entry.key] = entry.value
+            }
+        }
+
+        if (SaveHandler.saveExists(this@MainActivity, "liked")) {
+            var liked = SaveHandler.load(this@MainActivity, "liked") as HashMap<Int, Article>
+            Session.liked.clear()
+            for (entry in liked.entries) {
+                Session.liked[entry.key] = entry.value
             }
         }
     }

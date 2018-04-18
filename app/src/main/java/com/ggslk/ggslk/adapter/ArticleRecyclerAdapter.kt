@@ -40,6 +40,9 @@ class ArticleRecyclerAdapter(private val context: Context, private val articles:
         if (Session.favorites.containsKey(articles[position].id!!.toInt())) {
             holder.articleFavButton.isLiked = true
         }
+        if (Session.liked.containsKey(articles[position].id!!.toInt())) {
+            holder.articleLikeButton.isLiked = true
+        }
     }
 
     override fun getItemCount(): Int {
@@ -56,6 +59,7 @@ class ArticleRecyclerAdapter(private val context: Context, private val articles:
         val title: TextView = itemView.findViewById(R.id.articleActivityTitleTextView)
         val content: TextView = itemView.findViewById(R.id.articleContentTextView)
         val articleImageView: ImageView = itemView.findViewById(R.id.articleImageView)
+        val articleLikeButton: LikeButton = itemView.findViewById(R.id.articleActivityLikeButton)
         val articleFavButton: LikeButton = itemView.findViewById(R.id.articleActivityFavoriteButton)
 
         init {
@@ -74,6 +78,18 @@ class ArticleRecyclerAdapter(private val context: Context, private val articles:
                 override fun unLiked(likeButton: LikeButton) {
                     Session.favorites.remove(article!!.id!!.toInt())
                     SaveHandler.save(context, "favorites", Session.favorites)
+                }
+            })
+
+            articleLikeButton.setOnLikeListener(object : OnLikeListener {
+                override fun liked(likeButton: LikeButton) {
+                    Session.liked[article!!.id!!.toInt()] = article!!
+                    SaveHandler.save(context, "liked", Session.liked)
+                }
+
+                override fun unLiked(likeButton: LikeButton) {
+                    Session.liked.remove(article!!.id!!.toInt())
+                    SaveHandler.save(context, "liked", Session.liked)
                 }
             })
         }

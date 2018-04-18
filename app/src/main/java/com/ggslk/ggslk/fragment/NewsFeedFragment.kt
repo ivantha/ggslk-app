@@ -85,6 +85,7 @@ class NewsFeedFragment : Fragment() {
 
         SaveHandler.save(context!!, "articles", Session.articles)
         SaveHandler.save(context!!, "favorites", Session.favorites)
+        SaveHandler.save(context!!, "liked", Session.liked)
     }
 
     private fun loadRecentPosts(count: Int, page: Int, clear: Boolean = false) {

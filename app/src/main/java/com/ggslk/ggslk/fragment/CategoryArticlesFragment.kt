@@ -11,7 +11,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.ggslk.ggslk.R
-import com.ggslk.ggslk.adapter.CategoryArticleRecyclerAdapter
+import com.ggslk.ggslk.adapter.SmallArticleRecyclerAdapter
 import com.ggslk.ggslk.common.Session
 import com.ggslk.ggslk.model.Article
 import com.ggslk.ggslk.model.Author
@@ -35,7 +35,7 @@ class CategoryArticlesFragment : Fragment() {
     private var categorySlug: String? = null
 
     private var articles: ArrayList<Article> = ArrayList()
-    private var categoryArticleRecyclerAdapter: CategoryArticleRecyclerAdapter? = null
+    private var smallArticleRecyclerAdapter: SmallArticleRecyclerAdapter? = null
     private var loading = true
     private var pageNo = 1
 
@@ -58,8 +58,8 @@ class CategoryArticlesFragment : Fragment() {
         categoryArticleRecyclerView.layoutManager = linearLayoutManager
         categoryArticleRecyclerView.setHasFixedSize(true)
 
-        categoryArticleRecyclerAdapter = CategoryArticleRecyclerAdapter(context!!, articles)
-        categoryArticleRecyclerView.adapter = categoryArticleRecyclerAdapter
+        smallArticleRecyclerAdapter = SmallArticleRecyclerAdapter(context!!, articles)
+        categoryArticleRecyclerView.adapter = smallArticleRecyclerAdapter
 
         categoryArticleRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
@@ -123,7 +123,7 @@ class CategoryArticlesFragment : Fragment() {
                     articles.add(article)
                 }
 
-                categoryArticleRecyclerAdapter!!.notifyDataSetChanged()
+                smallArticleRecyclerAdapter!!.notifyDataSetChanged()
             } catch (e: JSONException) {
                 e.printStackTrace()
             } finally {
