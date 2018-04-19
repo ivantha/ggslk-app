@@ -7,6 +7,8 @@ import com.ggslk.ggslk.model.Category
 import com.google.firebase.analytics.FirebaseAnalytics
 
 
+
+
 object Session {
     var mFirebaseAnalytics: FirebaseAnalytics? = null
 
@@ -18,7 +20,6 @@ object Session {
     var mRequestQueue: RequestQueue? = null
 
     var newsFeedFragmentFirstOpen: Boolean = true
-    var categoriesFragmentFirstOpen: Boolean = true
 
     val categoryColors: ArrayList<Int> = ArrayList()
 

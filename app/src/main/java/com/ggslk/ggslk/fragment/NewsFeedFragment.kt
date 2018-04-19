@@ -18,6 +18,7 @@ import com.ggslk.ggslk.model.Article
 import com.ggslk.ggslk.model.Author
 import kotlinx.android.synthetic.main.fragment_news_feed.*
 import org.json.JSONException
+import org.jsoup.Jsoup
 
 
 class NewsFeedFragment : Fragment() {
@@ -108,6 +109,12 @@ class NewsFeedFragment : Fragment() {
                     article.content = articlesJsonArray.getJSONObject(i).get("content").toString()
                     article.publishedDate = articlesJsonArray.getJSONObject(i).get("date").toString().split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]
                     article.imageUrl = articlesJsonArray.getJSONObject(i).getJSONObject("thumbnail_images").getJSONObject("full").get("url").toString()
+
+                    // Format content to be mobile responsive
+                    val doc = Jsoup.parse(article.content)
+                    doc.select("img").attr("width", "100%")
+                    doc.select("img").attr("height", "auto")
+                    article.content = doc.html()
 
                     val author = Author()
                     author.id = articlesJsonArray.getJSONObject(i).getJSONObject("author").get("id").toString()
