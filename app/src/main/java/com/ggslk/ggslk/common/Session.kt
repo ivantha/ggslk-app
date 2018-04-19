@@ -6,9 +6,6 @@ import com.ggslk.ggslk.model.Article
 import com.ggslk.ggslk.model.Category
 import com.google.firebase.analytics.FirebaseAnalytics
 
-
-
-
 object Session {
     var mFirebaseAnalytics: FirebaseAnalytics? = null
 
@@ -22,6 +19,10 @@ object Session {
     var newsFeedFragmentFirstOpen: Boolean = true
 
     val categoryColors: ArrayList<Int> = ArrayList()
+
+    var englishEnabled = true
+    var sinhalaEnabled = true
+    var tamilEnabled = true
 
     init {
         // Add categories

@@ -7,6 +7,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.preference.PreferenceManager
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
@@ -16,20 +17,13 @@ import com.android.volley.toolbox.Volley
 import com.ggslk.ggslk.R
 import com.ggslk.ggslk.common.SaveHandler
 import com.ggslk.ggslk.common.Session
-import com.ggslk.ggslk.fragment.ContactUsFragment
-import com.ggslk.ggslk.fragment.FavoritesFragment
-import com.ggslk.ggslk.fragment.HomeFragment
-import com.ggslk.ggslk.fragment.ReportFragment
+import com.ggslk.ggslk.fragment.*
 import com.ggslk.ggslk.model.Article
 import com.ggslk.ggslk.model.Category
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.onesignal.OneSignal
 import kotlinx.android.synthetic.main.activity_main.*
-
-
-
-
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -64,12 +58,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 transaction.commit()
                 true
             }
-            R.id.action_contact_us -> {
-                fragment = ContactUsFragment.newInstance()
-                transaction.replace(R.id.fragmentContainer, fragment)
-                transaction.commit()
-                true
-            }
             else -> {
                 onOptionsItemSelected(item)
             }
@@ -92,7 +80,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
             R.id.nav_settings -> {
-
+                fragment = SettingsFragment.newInstance()
+                transaction.replace(R.id.fragmentContainer, fragment)
+            }
+            R.id.nav_about_us -> {
+                fragment = AboutUsFragment.newInstance()
+                transaction.replace(R.id.fragmentContainer, fragment)
             }
         }
         transaction.commit()
@@ -131,6 +124,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Call syncHashedEmail anywhere in your app if you have the user's email.
         // This improves the effectiveness of OneSignal's "best-time" notification scheduling feature.
         // OneSignal.syncHashedEmail(userEmail);
+
+        // Initiate preferences
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(baseContext)
+        Session.englishEnabled = sharedPreferences.getBoolean("settingsEnglish", true)
+        Session.sinhalaEnabled = sharedPreferences.getBoolean("settingsSinhala", true)
+        Session.tamilEnabled = sharedPreferences.getBoolean("settingsTamil", true)
 
         loadCachedSessionData()
 

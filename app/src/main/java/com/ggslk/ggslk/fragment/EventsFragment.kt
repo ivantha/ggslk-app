@@ -11,15 +11,14 @@ import com.ggslk.ggslk.R
 
 class EventsFragment : Fragment() {
 
-    companion object {
-        fun newInstance(): EventsFragment {
-            return EventsFragment()
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_events, container, false)
     }
 
+    companion object {
+        fun newInstance(): EventsFragment {
+            return EventsFragment()
+        }
+    }
 }

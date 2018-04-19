@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v7.preference.PreferenceCategory android:title="General">
+
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="settingsSaveData"
+            android:summary="Save mobile data"
+            android:title="Save data" />
+
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="settingsAnimations"
+            android:summary="Disable animations to improve performance"
+            android:title="Animations" />
+
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory android:title="Languages">
+
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="settingsEnglish"
+            android:title="English" />
+
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="settingsSinhala"
+            android:title="Sinhala" />
+
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="settingsTamil"
+            android:title="Tamil" />
+
+    </android.support.v7.preference.PreferenceCategory>
+
+</android.support.v7.preference.PreferenceScreen>
