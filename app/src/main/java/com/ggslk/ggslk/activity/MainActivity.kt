@@ -232,7 +232,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun loadCachedSessionData() {
         if (SaveHandler.saveExists(this@MainActivity, "categories")) {
-            var categories = SaveHandler.load(this@MainActivity, "categories") as ArrayList<Category>
+            val categories = SaveHandler.load(this@MainActivity, "categories") as ArrayList<Category>
             Session.categories.clear()
             for (category in categories) {
                 Session.categories.add(category)
@@ -240,7 +240,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         if (SaveHandler.saveExists(this@MainActivity, "articles")) {
-            var articles = SaveHandler.load(this@MainActivity, "articles") as ArrayList<Article>
+            val articles = SaveHandler.load(this@MainActivity, "articles") as ArrayList<Article>
             Session.articles.clear()
             for (article in articles) {
                 Session.articles.add(article)
@@ -248,7 +248,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         if (SaveHandler.saveExists(this@MainActivity, "favorites")) {
-            var favorites = SaveHandler.load(this@MainActivity, "favorites") as HashMap<Int, Article>
+            val favorites = SaveHandler.load(this@MainActivity, "favorites") as HashMap<Int, Article>
             Session.favorites.clear()
             for (entry in favorites.entries) {
                 Session.favorites[entry.key] = entry.value
@@ -256,7 +256,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         if (SaveHandler.saveExists(this@MainActivity, "liked")) {
-            var liked = SaveHandler.load(this@MainActivity, "liked") as HashMap<Int, Article>
+            val liked = SaveHandler.load(this@MainActivity, "liked") as HashMap<Int, Article>
             Session.liked.clear()
             for (entry in liked.entries) {
                 Session.liked[entry.key] = entry.value

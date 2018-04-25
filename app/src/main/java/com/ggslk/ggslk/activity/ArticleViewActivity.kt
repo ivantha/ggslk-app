@@ -34,10 +34,10 @@ class ArticleViewActivity : AppCompatActivity() {
         articleActivityFavButton.isFavorite = Session.favorites.containsKey(article.id!!.toInt())
 
         articleActivityFavButton.setOnFavoriteChangeListener { _, favorite ->
-            if (favorite){
+            if (favorite) {
                 Session.favorites[article.id!!.toInt()] = article
                 SaveHandler.save(this@ArticleViewActivity, "favorites", Session.favorites)
-            }else{
+            } else {
                 Session.favorites.remove(article.id!!.toInt())
                 SaveHandler.save(this@ArticleViewActivity, "favorites", Session.favorites)
             }
