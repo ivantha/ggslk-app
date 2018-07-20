@@ -1,0 +1,8 @@
+@font-face {
+    font-family: "Custom Font";
+    src: url('amalee.ttf');
+}
+
+* {
+    font-family: 'Custom Font', Verdana, sans-serif;
+}
