@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import com.ggslk.ggslk.R
+import com.ggslk.ggslk.common.SaveHandler
+import com.ggslk.ggslk.common.Session
 import com.ggslk.ggslk.model.Article
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_article_view.*
@@ -29,5 +31,16 @@ class ArticleViewActivity : AppCompatActivity() {
         articleActivityAuthorNameTextView.text = article.author!!.name
         Picasso.get().load("file:///android_asset/team/${article.author!!.id}.jpg").fit().centerCrop().into(articleActivityAuthorImageView)
         articleActivityArticleDateTextView.text = article.publishedDate
+        articleActivityFavButton.isFavorite = Session.favorites.containsKey(article.id!!.toInt())
+
+        articleActivityFavButton.setOnFavoriteChangeListener { _, favorite ->
+            if (favorite){
+                Session.favorites[article.id!!.toInt()] = article
+                SaveHandler.save(this@ArticleViewActivity, "favorites", Session.favorites)
+            }else{
+                Session.favorites.remove(article.id!!.toInt())
+                SaveHandler.save(this@ArticleViewActivity, "favorites", Session.favorites)
+            }
+        }
     }
 }

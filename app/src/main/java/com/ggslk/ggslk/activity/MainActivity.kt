@@ -19,7 +19,9 @@ import com.android.volley.toolbox.Volley
 import com.ggslk.ggslk.R
 import com.ggslk.ggslk.common.SaveHandler
 import com.ggslk.ggslk.common.Session
-import com.ggslk.ggslk.fragment.*
+import com.ggslk.ggslk.fragment.AboutUsFragment
+import com.ggslk.ggslk.fragment.FavoritesFragment
+import com.ggslk.ggslk.fragment.HomeFragment
 import com.ggslk.ggslk.model.Article
 import com.ggslk.ggslk.model.Category
 import com.google.android.gms.auth.api.Auth
@@ -66,21 +68,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      * The action bar will automatically handle clicks on the Home/Up button,
      * so long as you specify a parent activity in AndroidManifest.xml.
      */
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val transaction = supportFragmentManager.beginTransaction()
-        val fragment: Fragment
-        return when (item.itemId) {
-            R.id.action_report -> {
-                fragment = ReportFragment.newInstance()
-                transaction.replace(R.id.fragmentContainer, fragment)
-                transaction.commit()
-                true
-            }
-            else -> {
-                onOptionsItemSelected(item)
-            }
-        }
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return when (item.itemId) {
+//            R.id.action_report -> {
+//                true
+//            }
+//            else -> {
+//                onOptionsItemSelected(item)
+//            }
+//        }
+//    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val transaction = supportFragmentManager.beginTransaction()
@@ -94,13 +91,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 fragment = FavoritesFragment.newInstance()
                 transaction.replace(R.id.fragmentContainer, fragment)
             }
-            R.id.nav_profile -> {
-
-            }
-            R.id.nav_settings -> {
-                fragment = SettingsFragment.newInstance()
-                transaction.replace(R.id.fragmentContainer, fragment)
-            }
+//            R.id.nav_profile -> {
+//
+//            }
+//            R.id.nav_settings -> {
+//                fragment = SettingsFragment.newInstance()
+//                transaction.replace(R.id.fragmentContainer, fragment)
+//            }
             R.id.nav_about_us -> {
                 fragment = AboutUsFragment.newInstance()
                 transaction.replace(R.id.fragmentContainer, fragment)
@@ -201,8 +198,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onConnectionFailed(connectionResult: ConnectionResult) {
-        Log.e(TAG, "onConnectionFailed():$connectionResult");
-        Toast.makeText(applicationContext, "Google Play Services error.", Toast.LENGTH_SHORT).show();
+        Log.e(TAG, "onConnectionFailed():$connectionResult")
+        Toast.makeText(applicationContext, "Google Play Services error.", Toast.LENGTH_SHORT).show()
     }
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
@@ -232,7 +229,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun updateUI(user: FirebaseUser?) {
-        if(user != null){
+        if (user != null) {
             Picasso.get().load(user.photoUrl).fit().centerCrop().into(navHeaderProfileImageView)
             navHeaderNameTextView.text = user.displayName
             navHeaderEmailTextView.text = user.email
