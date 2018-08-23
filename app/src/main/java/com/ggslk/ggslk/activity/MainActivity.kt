@@ -14,6 +14,8 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import com.android.volley.toolbox.Volley
 import com.ggslk.ggslk.R
@@ -24,6 +26,7 @@ import com.ggslk.ggslk.fragment.FavoritesFragment
 import com.ggslk.ggslk.fragment.HomeFragment
 import com.ggslk.ggslk.model.Article
 import com.ggslk.ggslk.model.Category
+import com.ggslk.ggslk.model.Report
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -34,10 +37,13 @@ import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.FirebaseDatabase
 import com.onesignal.OneSignal
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
+import org.jetbrains.anko.*
+import org.jetbrains.anko.design.textInputLayout
 
 private const val TAG = "GGSLKGoogleSignIn"
 private const val REQUEST_CODE_SIGN_IN = 1234
@@ -52,6 +58,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val drawer = findViewById<View>(R.id.drawerLayout) as DrawerLayout
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
+        } else {
+            finish()
         }
     }
 
@@ -66,16 +74,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      * The action bar will automatically handle clicks on the Home/Up button,
      * so long as you specify a parent activity in AndroidManifest.xml.
      */
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return when (item.itemId) {
-//            R.id.action_report -> {
-//                true
-//            }
-//            else -> {
-//                onOptionsItemSelected(item)
-//            }
-//        }
-//    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_report -> {
+                showReportAlert()
+                true
+            }
+            else -> {
+                onOptionsItemSelected(item)
+            }
+        }
+    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val transaction = supportFragmentManager.beginTransaction()
@@ -262,5 +271,41 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Session.liked[entry.key] = entry.value
             }
         }
+    }
+
+    private fun showReportAlert() {
+        var reportDialogTitleEditText: EditText? = null
+        var reportDialogContentEditText: EditText? = null
+        alert {
+            title = "Report"
+            customView {
+                linearLayout {
+                    textInputLayout {
+                        reportDialogTitleEditText = editText{
+                            hint = "Title"
+                        }
+                    }.lparams (width = matchParent, height = wrapContent){
+                    }
+                    textInputLayout {
+                        reportDialogContentEditText = editText{
+                            hint = "Description"
+                        }
+                    }.lparams (width = matchParent, height = matchParent){
+                        topMargin = dip(8)
+                    }
+                    checkBox {
+                        text = "Send a screenshot of the current view"
+                    }.lparams {
+                        topMargin = dip(8)
+                    }
+                    padding = dip(16)
+                    orientation = LinearLayout.VERTICAL
+                }
+                positiveButton("Send") {
+                    var report = Report(reportDialogTitleEditText!!.editableText.toString(), reportDialogContentEditText!!.editableText.toString())
+                    FirebaseDatabase.getInstance().reference.child("reports/" + FirebaseAuth.getInstance().currentUser!!.uid).push().setValue(report)
+                }
+            }
+        }.show()
     }
 }
