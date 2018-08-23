@@ -52,8 +52,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val drawer = findViewById<View>(R.id.drawerLayout) as DrawerLayout
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
-        } else {
-            onBackPressed()
         }
     }
 
@@ -162,10 +160,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val fragment = HomeFragment.newInstance()
         transaction.replace(R.id.fragmentContainer, fragment)
         transaction.commit()
-    }
-
-    override fun onStart() {
-        super.onStart()
 
         signIn()
     }
@@ -192,7 +186,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             } else {
                 // failed -> update UI
                 updateUI(null)
-                Toast.makeText(applicationContext, "SignIn: failed!", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(applicationContext, "SignIn: failed!", Toast.LENGTH_SHORT).show()
             }
         }
     }
