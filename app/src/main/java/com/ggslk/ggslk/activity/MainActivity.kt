@@ -227,15 +227,44 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun signIn() {
-        val intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
-        startActivityForResult(intent, REQUEST_CODE_SIGN_IN)
+//        val intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
+//        startActivityForResult(intent, REQUEST_CODE_SIGN_IN)
+
+        // Sign in anonymously
+        // TODO - Remove Anonymous sign in part to sign in normally
+        val currentUser = mAuth!!.currentUser
+        if (currentUser != null) {
+            Log.e(TAG, "signInWithCredential: Success!")
+            var user: FirebaseUser = mAuth!!.currentUser!!
+            updateUI(user)
+
+            // Set OneSignal user email for better notifications
+            OneSignal.setEmail(user.email!!)
+        } else {
+            mAuth!!.signInAnonymously()
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            val user = mAuth!!.currentUser
+                            user?.let {
+                                Log.e(TAG, "signInWithCredential: Success!")
+                                var user: FirebaseUser = it
+                                updateUI(user)
+
+                                // Set OneSignal user email for better notifications
+                                OneSignal.setEmail(user.email!!)
+                            }
+                        } else {
+                            Toast.makeText(this@MainActivity,"Authentication failed.",Toast.LENGTH_SHORT).show()
+                        }
+                    }
+        }
     }
 
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
-            Picasso.get().load(user.photoUrl).fit().centerCrop().into(navHeaderProfileImageView)
-            navHeaderNameTextView.text = user.displayName
-            navHeaderEmailTextView.text = user.email
+//            Picasso.get().load(user.photoUrl).fit().centerCrop().into(navHeaderProfileImageView)
+//            navHeaderNameTextView.text = user.displayName
+//            navHeaderEmailTextView.text = user.email
         }
     }
 
@@ -281,16 +310,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             customView {
                 linearLayout {
                     textInputLayout {
-                        reportDialogTitleEditText = editText{
+                        reportDialogTitleEditText = editText {
                             hint = "Title"
                         }
-                    }.lparams (width = matchParent, height = wrapContent){
+                    }.lparams(width = matchParent, height = wrapContent) {
                     }
                     textInputLayout {
-                        reportDialogContentEditText = editText{
+                        reportDialogContentEditText = editText {
                             hint = "Description"
                         }
-                    }.lparams (width = matchParent, height = matchParent){
+                    }.lparams(width = matchParent, height = matchParent) {
                         topMargin = dip(8)
                     }
                     checkBox {

@@ -10,7 +10,6 @@ import com.ggslk.ggslk.common.Session
 import com.ggslk.ggslk.model.Article
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_article_view.*
-import android.webkit.WebViewClient
 import org.jsoup.Jsoup
 
 
@@ -36,17 +35,17 @@ class ArticleViewActivity : AppCompatActivity() {
         article.content = doc.outerHtml()
 
         // Set article
-        articleActivityTitleTextView.text = Html.fromHtml(article.title)
+        this.articleActivityTitleTextView.text = Html.fromHtml(article.title)
         Picasso.get().load(article.imageUrl).fit().centerCrop().into(articleActivityImageImageView)
-        articleActivityContentWebView.loadDataWithBaseURL("file:///android_asset/", article.content, "text/html", "UTF-8", null)
+        this.articleActivityContentWebView.loadDataWithBaseURL("file:///android_asset/", article.content, "text/html", "UTF-8", null)
 
         // Set author
-        articleActivityAuthorNameTextView.text = article.author!!.name
+        this.articleActivityAuthorNameTextView.text = article.author!!.name
         Picasso.get().load("file:///android_asset/team/${article.author!!.id}.jpg").fit().centerCrop().into(articleActivityAuthorImageView)
-        articleActivityArticleDateTextView.text = article.publishedDate
-        articleActivityFavButton.isFavorite = Session.favorites.containsKey(article.id!!.toInt())
+        this.articleActivityArticleDateTextView.text = article.publishedDate
+        this.articleActivityFavButton.isFavorite = Session.favorites.containsKey(article.id!!.toInt())
 
-        articleActivityFavButton.setOnFavoriteChangeListener { _, favorite ->
+        this.articleActivityFavButton.setOnFavoriteChangeListener { _, favorite ->
             if (favorite) {
                 Session.favorites[article.id!!.toInt()] = article
                 SaveHandler.save(this@ArticleViewActivity, "favorites", Session.favorites)
