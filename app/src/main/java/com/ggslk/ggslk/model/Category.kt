@@ -2,16 +2,7 @@ package com.ggslk.ggslk.model
 
 import java.io.Serializable
 
-class Category : Serializable {
-    var id: String? = null
-    var slug: String? = null
-    var title: String? = null
+class Category(var id: String?, var slug: String?, var title: String?) : Serializable {
     var featuredArticle: Article? = null
     var articles: ArrayList<Article> = ArrayList()
-
-    constructor(id: String?, slug: String?, title: String?) {
-        this.id = id
-        this.slug = slug
-        this.title = title
-    }
 }

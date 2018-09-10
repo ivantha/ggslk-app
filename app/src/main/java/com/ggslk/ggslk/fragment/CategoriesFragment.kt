@@ -35,14 +35,14 @@ class CategoriesFragment : Fragment() {
 
         Session.mRequestQueue!!.cancelAll("cat")
 
-        categoryFragmentSwipeContainer.setOnRefreshListener({
+        categoryFragmentSwipeContainer.setOnRefreshListener {
             // Clear the featured articles
             for (category in Session.categories) {
                 category.featuredArticle = null
             }
             categoryRecyclerAdapter!!.notifyItemRangeChanged(0, Session.categories.size)
             categoryFragmentSwipeContainer.isRefreshing = false
-        })
+        }
     }
 
     override fun onDestroy() {
