@@ -83,18 +83,18 @@ class CategoryArticlesFragment : Fragment() {
 
         Session.mRequestQueue!!.cancelAll("cat")
 
-        categoryArticlesFragmentSwipeContainer.setOnRefreshListener({
+        categoryArticlesFragmentSwipeContainer.setOnRefreshListener {
             pageNo = 1
             loadRecentPosts(10, pageNo++, clear = true)
-        })
+        }
 
         // Trigger auto refresh on the first time
-        categoryArticlesFragmentSwipeContainer!!.post({
+        categoryArticlesFragmentSwipeContainer!!.post {
             categoryArticlesFragmentSwipeContainer!!.isRefreshing = true
 
             pageNo = 1
             loadRecentPosts(10, pageNo++, clear = true)
-        })
+        }
     }
 
     private fun loadRecentPosts(count: Int, page: Int, clear: Boolean = false) {

@@ -67,13 +67,13 @@ class NewsFeedFragment : Fragment() {
 
         Session.mRequestQueue!!.cancelAll("cat")
 
-        homeFragmentSwipeContainer.setOnRefreshListener({
+        homeFragmentSwipeContainer.setOnRefreshListener {
             pageNo = 1
             loadRecentPosts(10, pageNo++, clear = true)
-        })
+        }
 
         // Trigger auto refresh on the first time
-        homeFragmentSwipeContainer!!.post({
+        homeFragmentSwipeContainer!!.post {
             if (Session.newsFeedFragmentFirstOpen) {
                 homeFragmentSwipeContainer!!.isRefreshing = true
 
@@ -82,7 +82,7 @@ class NewsFeedFragment : Fragment() {
 
                 Session.newsFeedFragmentFirstOpen = false
             }
-        })
+        }
     }
 
     override fun onDestroy() {

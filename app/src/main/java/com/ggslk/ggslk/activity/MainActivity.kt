@@ -39,9 +39,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.FirebaseDatabase
 import com.onesignal.OneSignal
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.nav_header_main.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.textInputLayout
 
@@ -132,7 +130,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navView.setNavigationItemSelectedListener(this)
 
         // Obtain the FirebaseAnalytics instance.
-        Session.mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        FirebaseAnalytics.getInstance(this)
 
         // RequestQueue initialized
         Session.mRequestQueue = Volley.newRequestQueue(this@MainActivity)
@@ -208,7 +206,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
         var credential: AuthCredential = GoogleAuthProvider.getCredential(acct.idToken, null)
         mAuth!!.signInWithCredential(credential)
-                .addOnCompleteListener(this@MainActivity, {
+                .addOnCompleteListener(this@MainActivity) {
                     if (it.isSuccessful) {
                         // Sign in success
                         Log.e(TAG, "signInWithCredential: Success!")
@@ -223,7 +221,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         Toast.makeText(applicationContext, "Authentication failed!", Toast.LENGTH_SHORT).show()
                         updateUI(null)
                     }
-                })
+                }
     }
 
     private fun signIn() {
@@ -254,7 +252,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                                 OneSignal.setEmail(user.email!!)
                             }
                         } else {
-                            Toast.makeText(this@MainActivity,"Authentication failed.",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@MainActivity, "Authentication failed.", Toast.LENGTH_SHORT).show()
                         }
                     }
         }
