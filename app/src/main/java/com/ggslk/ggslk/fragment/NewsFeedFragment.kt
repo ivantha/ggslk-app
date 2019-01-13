@@ -46,7 +46,7 @@ class NewsFeedFragment : Fragment() {
         pageNo = (Session.articles.size / 10) + 1
 
         articleRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 0)
                 // Check for scroll down
                 {
