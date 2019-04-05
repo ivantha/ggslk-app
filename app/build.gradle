@@ -58,7 +58,7 @@ dependencies {
     implementation 'com.android.support:preference-v14:28.0.0'
     implementation 'com.google.firebase:firebase-core:12.0.1'
     implementation 'com.google.firebase:firebase-storage:12.0.1'
-    implementation 'com.google.firebase:firebase-auth:12.0.1'
+    implementation 'com.google.firebase:firebase-auth:16.2.1'
     implementation 'com.google.firebase:firebase-database:12.0.1'
     implementation 'com.google.firebase:firebase-crash:12.0.1'
     implementation 'com.google.firebase:firebase-perf:12.0.1'
