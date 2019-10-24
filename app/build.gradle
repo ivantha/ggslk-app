@@ -70,7 +70,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
-    implementation 'org.jsoup:jsoup:1.11.3'
+    implementation 'org.jsoup:jsoup:1.12.1'
     implementation 'com.github.ivbaranov:materialfavoritebutton:0.1.4'
     testImplementation 'junit:junit:4.12'
 }
