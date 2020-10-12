@@ -1,5 +1,5 @@
 plugins {
-    id 'com.onesignal.androidsdk.onesignal-gradle-plugin' version '0.12.8'
+    id 'com.onesignal.androidsdk.onesignal-gradle-plugin' version '0.12.9'
 }
 
 apply plugin: 'com.android.application'
